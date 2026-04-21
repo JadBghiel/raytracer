@@ -1,3 +1,9 @@
+/*
+** EPITECH PROJECT, 2026
+** Math
+** File description:
+** Math
+*/
 #pragma once
 
 #include <cmath>
