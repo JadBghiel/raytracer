@@ -45,7 +45,7 @@ int main(int argc, char **argv)
         return print_help();
 
     if (argc != 2)
-        return print_error("error: invalid args, use --help or provide one scene file.");
+        return print_error("error: invalid args, use --help or provide one scene file");
 
     const std::string sceneFile = argv[1];
     if (!scene_file_exists(sceneFile))
