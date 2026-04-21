@@ -10,6 +10,9 @@
 
 namespace Math {
 
+// offical rotation order for composed transforms: X, then Y, then Z
+constexpr const char *rotation_order = "X -> Y -> Z";
+
 class Vector3 {
 public:
     double x = 0.0;
@@ -20,6 +23,13 @@ public:
     Vector3(double xValue, double yValue, double zValue)
         : x(xValue), y(yValue), z(zValue)
     {
+    }
+
+    static constexpr double pi = 3.14159265358979323846;
+
+    static double degrees_to_radians(double degrees)
+    {
+        return degrees * (pi / 180.0);
     }
 
     // ||v|| = sqrt(x^2 + y^2 + z^2)
@@ -53,6 +63,45 @@ public:
         x /= value;
         y /= value;
         z /= value;
+        return *this;
+    }
+
+    Vector3 &rotateX(double degrees)
+    {
+        const double radians = degrees_to_radians(degrees);
+        const double c = std::cos(radians);
+        const double s = std::sin(radians);
+        const double oldY = y;
+        const double oldZ = z;
+
+        y = (oldY * c) - (oldZ * s);
+        z = (oldY * s) + (oldZ * c);
+        return *this;
+    }
+
+    Vector3 &rotateY(double degrees)
+    {
+        const double radians = degrees_to_radians(degrees);
+        const double c = std::cos(radians);
+        const double s = std::sin(radians);
+        const double oldX = x;
+        const double oldZ = z;
+
+        x = (oldX * c) + (oldZ * s);
+        z = (-oldX * s) + (oldZ * c);
+        return *this;
+    }
+
+    Vector3 &rotateZ(double degrees)
+    {
+        const double radians = degrees_to_radians(degrees);
+        const double c = std::cos(radians);
+        const double s = std::sin(radians);
+        const double oldX = x;
+        const double oldY = y;
+
+        x = (oldX * c) - (oldY * s);
+        y = (oldX * s) + (oldY * c);
         return *this;
     }
 
@@ -135,7 +184,7 @@ public:
     }
 };
 
-inline Vector3 operator*(double scalar, const Vector3 &vector)
+Vector3 operator*(double scalar, const Vector3 &vector)
 {
     return vector * scalar;
 }
@@ -159,6 +208,11 @@ public:
         y += vector.y;
         z += vector.z;
         return *this;
+    }
+
+    Point3 &translate(const Vector3 &offset)
+    {
+        return (*this += offset);
     }
 
     // translate a point by a vector
