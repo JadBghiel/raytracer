@@ -22,16 +22,19 @@ public:
     {
     }
 
+    // ||v|| = sqrt(x^2 + y^2 + z^2)
     double length() const
     {
         return std::sqrt((x * x) + (y * y) + (z * z));
     }
 
+    // v · w = vx * wx + vy * wy + vz * wz
     double dot(const Vector3 &other) const
     {
         return (x * other.x) + (y * other.y) + (z * other.z);
     }
 
+    // v / ||v||, with zero vector protection
     Vector3 normalized() const
     {
         const double value = length();
@@ -149,6 +152,7 @@ public:
     {
     }
 
+    // P + v = (px + vx, py + vy, pz + vz)
     Point3 &operator+=(const Vector3 &vector)
     {
         x += vector.x;
@@ -157,6 +161,7 @@ public:
         return *this;
     }
 
+    // translate a point by a vector
     Point3 operator+(const Vector3 &vector) const
     {
         return Point3(*this) += vector;
