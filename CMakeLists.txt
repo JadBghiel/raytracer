@@ -32,6 +32,7 @@ add_executable(raytracer
     src/main.cpp
 )
 
+target_include_directories(raytracer PRIVATE include)
 target_compile_options(raytracer PRIVATE -Wall -Wextra -Werror)
 
 add_custom_target(fclean
