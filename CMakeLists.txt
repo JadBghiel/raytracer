@@ -1,0 +1,46 @@
+cmake_minimum_required(VERSION 3.16)
+
+project(raytracer VERSION 0.1 LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
+
+option(RAYTRACER_ENABLE_LIBCONFIGPP "enable libconfig++ scene parsing support" ON)
+option(RAYTRACER_ENABLE_SFML "enable SFML display support" ON)
+
+find_library(LIBCONFIGPP_LIBRARY NAMES config++ libconfig++
+    PATHS /usr/lib /usr/local/lib
+)
+find_path(LIBCONFIGPP_INCLUDE_DIR NAMES libconfig.h++
+    PATHS /usr/include /usr/local/include
+)
+
+find_package(SFML 2.5 QUIET COMPONENTS graphics window system)
+
+if (RAYTRACER_ENABLE_LIBCONFIGPP AND (NOT LIBCONFIGPP_LIBRARY OR NOT LIBCONFIGPP_INCLUDE_DIR))
+    message(WARNING "libconfig++ not found yet: scene parser support is prepared but not enabled")
+endif()
+
+if (RAYTRACER_ENABLE_SFML AND NOT SFML_FOUND)
+    message(WARNING "SFML not found yet: display support is prepared but not enabled")
+endif()
+
+add_executable(raytracer
+    src/main.cpp
+)
+
+target_compile_options(raytracer PRIVATE -Wall -Wextra -Werror)
+
+add_custom_target(fclean
+    COMMAND ${CMAKE_COMMAND} -E rm -f ${CMAKE_SOURCE_DIR}/raytracer
+    COMMENT "removing raytracer binary..."
+)
+
+add_custom_target(re
+    COMMAND ${CMAKE_COMMAND} -E rm -f ${CMAKE_SOURCE_DIR}/raytracer
+    COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target raytracer
+    COMMENT "rebuilding raytracer from scratch..."
+)
