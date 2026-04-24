@@ -9,6 +9,7 @@
 #include <cstddef>
 #include <string>
 #include <vector>
+#include "Camera.hpp"
 
 namespace RayTracer {
 
@@ -16,6 +17,8 @@ class ParsedScene {
 public:
     std::string rawContent;
     std::vector<std::string> topLevelKeys;
+    Camera camera;
+    // more fields will be added: lights, primitives
 };
 
 class SceneParseError {
