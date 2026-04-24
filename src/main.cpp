@@ -5,9 +5,10 @@
 ** main
 */
 #include <filesystem>
-#include <fstream>
 #include <iostream>
 #include <string>
+
+#include "SceneParser.hpp"
 
 namespace {
 
@@ -37,7 +38,7 @@ bool scene_file_exists(const std::string &path)
         && !errorCode;
 }
 
-} // namespace
+}
 
 int main(int argc, char **argv)
 {
@@ -51,9 +52,9 @@ int main(int argc, char **argv)
     if (!scene_file_exists(sceneFile))
         return print_error("error: scene file not found: " + sceneFile);
 
-    std::ifstream input(sceneFile);
-    if (!input.is_open())
-        return print_error("error: unable to open scene file: " + sceneFile);
+    const RayTracer::SceneParseResult parseResult = RayTracer::SceneParser::parseFile(sceneFile);
+    if (!parseResult.ok)
+        return print_error("error: " + parseResult.error.toString());
 
     return success_exit_code;
 }
