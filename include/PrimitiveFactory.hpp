@@ -6,9 +6,6 @@
 */
 #pragma once
 
-#include <memory>
-#include "IPrimitive.hpp"
-
 namespace RayTracer {
 
 class PrimitiveFactory {
