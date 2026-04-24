@@ -184,7 +184,7 @@ public:
     }
 };
 
-Vector3 operator*(double scalar, const Vector3 &vector)
+inline Vector3 operator*(double scalar, const Vector3 &vector)
 {
     return vector * scalar;
 }
