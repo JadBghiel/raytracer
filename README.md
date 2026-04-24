@@ -1,3 +1,13 @@
+TEST:
+
+we can preview the image without having sfml for now 
+
+from root do this:
+
+`./test/snapshot.sh path/output.ppm`
+
+
+
 TODO:
 
 - primitive factory
