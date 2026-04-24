@@ -225,4 +225,4 @@ public:
 using Vector3D = Vector3;
 using Point3D = Point3;
 
-} // namespace Math
+}
