@@ -1,0 +1,155 @@
+/*
+** EPITECH PROJECT, 2026
+** JsonHelper
+** File description:
+** JsonHelper
+*/
+
+#include "parser/JsonHelper.hpp"
+#include <cctype>
+
+namespace RayTracer {
+namespace Parser {
+
+bool JsonHelper::isWhitespace(char c)
+{
+    return std::isspace(static_cast<unsigned char>(c)) != 0;
+}
+
+std::size_t JsonHelper::skipWhitespace(const std::string &content, std::size_t index)
+{
+    while (index < content.size() && isWhitespace(content[index]))
+        ++index;
+    return index;
+}
+
+bool JsonHelper::tryExtractJsonNumber(const std::string &content, std::size_t &index, double &value, SceneParseError &error)
+{
+    index = skipWhitespace(content, index);
+    if (index >= content.size()) {
+        error.message = "unexpected end of input while parsing number";
+        return false;
+    }
+
+    std::size_t start = index;
+    bool hasDecimal = false;
+    bool hasExponent = false;
+
+    // handle negative sign
+    if (content[index] == '-') {
+        ++index;
+    }
+
+    // parse digits before decimal
+    if (index >= content.size() || !std::isdigit(static_cast<unsigned char>(content[index]))) {
+        error.message = "expected digit in number";
+        return false;
+    }
+
+    while (index < content.size() && std::isdigit(static_cast<unsigned char>(content[index]))) {
+        ++index;
+    }
+
+    // handle decimal point
+    if (index < content.size() && content[index] == '.' && !hasDecimal && !hasExponent) {
+        hasDecimal = true;
+        ++index;
+        if (index >= content.size() || !std::isdigit(static_cast<unsigned char>(content[index]))) {
+            error.message = "expected digit after decimal point";
+            return false;
+        }
+        while (index < content.size() && std::isdigit(static_cast<unsigned char>(content[index]))) {
+            ++index;
+        }
+    }
+
+    // handle exponent (e or E)
+    if (index < content.size() && (content[index] == 'e' || content[index] == 'E') && !hasExponent) {
+        hasExponent = true;
+        ++index;
+        if (index < content.size() && (content[index] == '+' || content[index] == '-')) {
+            ++index;
+        }
+        if (index >= content.size() || !std::isdigit(static_cast<unsigned char>(content[index]))) {
+            error.message = "expected digit in exponent";
+            return false;
+        }
+        while (index < content.size() && std::isdigit(static_cast<unsigned char>(content[index]))) {
+            ++index;
+        }
+    }
+
+    try {
+        value = std::stod(content.substr(start, index - start));
+        return true;
+    } catch (...) {
+        error.message = "invalid number format";
+        return false;
+    }
+}
+
+bool JsonHelper::tryExtractJsonObject(const std::string &content, std::size_t &index, std::string &objectStr, SceneParseError &error)
+{
+    index = skipWhitespace(content, index);
+    if (index >= content.size() || content[index] != '{') {
+        error.message = "expected JSON object (opening '{')";
+        return false;
+    }
+
+    std::size_t start = index;
+    int braceCount = 0;
+    bool inString = false;
+    bool escaping = false;
+
+    while (index < content.size()) {
+        const char c = content[index];
+
+        if (inString) {
+            if (escaping) {
+                escaping = false;
+                ++index;
+                continue;
+            }
+            if (c == '\\') {
+                escaping = true;
+                ++index;
+                continue;
+            }
+            if (c == '"') {
+                inString = false;
+            }
+            ++index;
+            continue;
+        }
+
+        if (c == '"') {
+            inString = true;
+            ++index;
+            continue;
+        }
+
+        if (c == '{') {
+            ++braceCount;
+            ++index;
+            continue;
+        }
+
+        if (c == '}') {
+            --braceCount;
+            ++index;
+            if (braceCount == 0) {
+                objectStr = content.substr(start, index - start);
+                return true;
+            }
+            continue;
+        }
+
+        ++index;
+    }
+
+    error.message = "unterminated JSON object";
+    return false;
+}
+
+}
+}
