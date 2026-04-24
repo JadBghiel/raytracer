@@ -30,7 +30,9 @@ endif()
 
 add_executable(raytracer
     src/main.cpp
-    src/SceneParser.cpp
+    src/parser/SceneParser.cpp
+    src/parser/CameraParser.cpp
+    src/parser/JsonHelper.cpp
 )
 
 target_include_directories(raytracer PRIVATE include)
