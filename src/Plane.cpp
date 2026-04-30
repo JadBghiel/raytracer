@@ -33,6 +33,8 @@ namespace RayTracer {
 // That number is called epsilon
 // we need it because computers can't represent decimal numbers perfectly.
 // This specific number will save us when rays are parallel to the Plane.
+//
+// website: https://stackoverflow.com/questions/13436125/how-big-should-epsilon-be-when-checking-if-dot-product-is-close-to-0
 
 HitRecord Plane::intersect(const Ray &ray, double tMin, double tMax) const
 {
