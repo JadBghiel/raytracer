@@ -27,16 +27,16 @@ namespace RayTracer {
 //      - axis=y -> normal(0, 1, 0)
 //      - axis=z -> normal(0, 0, 1)
 
-//HitRecord Plane::intersect(const Ray &ray, double tMin, double tMax) const
-//{
-//    Math::Vector3 normal;
-//    double originAxis;
-//    double directionAxis;
-//    double t = (_pos - originAxis) / directionAxis;
-//    Math::Point3 hitPoint = ray.at(t);
-//
-//    //TODO
-//    return HitRecord(hitPoint, normal, t, true);
-//}
+HitRecord Plane::intersect(const Ray &ray, double tMin, double tMax) const
+{
+    Math::Vector3 normal;
+    double originAxis;
+    double directionAxis;
+    double t = (_pos - originAxis) / directionAxis;
+    Math::Point3 hitPoint = ray.at(t);
+
+    //TODO
+    return HitRecord(hitPoint, normal, t, true);
+}
 
 }
