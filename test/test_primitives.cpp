@@ -2,44 +2,44 @@
 #include "Sphere.hpp"
 #include "Plane.hpp"
 
-//tested by gerardinho
+// tested by gerardinho
+
 int main()
 {
+    std::cout << "========================================\n";
+    std::cout << "        PRIMITIVE INTERSECTION TESTS    \n";
+    std::cout << "========================================\n\n";
+
+    // --- SPHERE ---
     RayTracer::Sphere sphere({0, 0, -3}, 1.0, {255, 0, 0});
 
-    // ray pointing straight at the sphere → should hit
+    std::cout << "--- SPHERE TESTS ---\n";
+
     RayTracer::Ray rayHit({0,0,0}, {0,0,-1});
     RayTracer::HitRecord rec1 = sphere.intersect(rayHit, 0.001, 1e9);
-    std::cout << "--- SPHERE TESTING ---" << std::endl;
-    if (rec1.hit)
-        std::cout << "HIT at t=" << rec1.t << "\n";
-    else
-        std::cout << "NO HIT\n";
+    std::cout << "[direct hit]  expected: HIT t=2  | got: ";
+    std::cout << (rec1.hit ? "HIT t=" + std::to_string(rec1.t) : "NO HIT") << "\n";
 
-    // ray pointing away from sphere → should NOT hit
     RayTracer::Ray rayMiss({0,0,0}, {0,0,1});
     RayTracer::HitRecord rec2 = sphere.intersect(rayMiss, 0.001, 1e9);
-    std::cout << "--- PLANE TESTING ---" << std::endl;
-    if (rec2.hit)
-        std::cout << "HIT at t=" << rec2.t << "\n";
-    else
-        std::cout << "NO HIT\n";
+    std::cout << "[wrong dir]   expected: NO HIT   | got: ";
+    std::cout << (rec2.hit ? "HIT t=" + std::to_string(rec2.t) : "NO HIT") << "\n";
 
-    // ray going down toward a Y plane at position -3 → should hit at t=3
+    // --- PLANE ---
     RayTracer::Plane plane("Y", -3.0, {0, 255, 0});
+
+    std::cout << "\n--- PLANE TESTS ---\n";
+
     RayTracer::Ray rayDown({0,0,0}, {0,-1,0});
     RayTracer::HitRecord rec3 = plane.intersect(rayDown, 0.001, 1e9);
-    if (rec3.hit)
-        std::cout << "Plane HIT at t=" << rec3.t << "\n";
-    else
-        std::cout << "Plane NO HIT\n";
+    std::cout << "[direct hit]  expected: HIT t=3  | got: ";
+    std::cout << (rec3.hit ? "HIT t=" + std::to_string(rec3.t) : "NO HIT") << "\n";
 
-    // ray parallel to the plane → should NOT hit
     RayTracer::Ray rayParallel({0,0,0}, {1,0,0});
     RayTracer::HitRecord rec4 = plane.intersect(rayParallel, 0.001, 1e9);
-    if (rec4.hit)
-        std::cout << "Plane HIT at t=" << rec4.t << "\n";
-    else
-        std::cout << "Plane NO HIT\n";
+    std::cout << "[parallel]    expected: NO HIT   | got: ";
+    std::cout << (rec4.hit ? "HIT t=" + std::to_string(rec4.t) : "NO HIT") << "\n";
+
+    std::cout << "\n========================================\n";
     return 0;
 }
