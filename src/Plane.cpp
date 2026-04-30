@@ -35,6 +35,10 @@ namespace RayTracer {
 // This specific number will save us when rays are parallel to the Plane.
 //
 // website: https://stackoverflow.com/questions/13436125/how-big-should-epsilon-be-when-checking-if-dot-product-is-close-to-0
+//
+// It is important to note that having the number from the website will make the Raytracer less efficient
+// 10*DBL_MIN = 2.2e-308, that number is TOO small for our liking
+// It won't protect well because computer imprecission is worse than that.
 
 HitRecord Plane::intersect(const Ray &ray, double tMin, double tMax) const
 {
