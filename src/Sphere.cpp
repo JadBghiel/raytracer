@@ -12,7 +12,7 @@
 
 namespace RayTracer {
 
-// This is long, so to remember it I'll add stepz to it
+// This not short, so to remember it I'll add stepz to it
 //
 // A ray is a line: P(t) = Origin + t * Direction
 // We want to find 't' where the ray touches the sphere
