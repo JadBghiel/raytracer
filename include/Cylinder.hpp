@@ -24,6 +24,8 @@ class Cylinder : public IPrimitive
         Cylinder(const Math::Point3 &center, double radius, double height, const Color &color) : _center(center), _radius(radius), _height(height), _color(color) {};
         ~Cylinder() = default;
         HitRecord intersect(const Ray &ray, double tMin, double tMax) const override;
+
+        HitRecord intersect_body(const Ray &ray, double tMin, double tMax) const;
 };
 }
 

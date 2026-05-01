@@ -8,6 +8,8 @@
 
 #include "Cylinder.hpp"
 #include "HitRecord.hpp"
+#include "Math.hpp"
+#include <cmath>
 
 namespace RayTracer {
 // A cylinder is a circle extended along the Y axis.
@@ -17,7 +19,8 @@ namespace RayTracer {
 //      - 2 Flat circular caps
 //
 // BODY:
-//  Substitute ray into x² + z² = R²
+//  Substitute ray into x² + z² = R² -> we will get the typical ax² + bx + c = 0
+//  The final thing would be (Dx² + Dz²)*t² + (2*Ox*Dx + 2*Oz*Dz)*t + (Ox² + Oz² - R²) = 0
 //  a = Dx² + Dz²
 //  b = 2*((Ox-Cx)*Dx + (Oz-Cz)*Dz)
 //  c = (Ox-Cx)² + (Oz-Cz)² - R²
@@ -29,8 +32,35 @@ namespace RayTracer {
 //
 // We keep the nearest valid hit across the body and both caps, just like in any other shape.
 
+HitRecord Cylinder::intersect_body(const Ray &ray, double tMin, double tMax) const
+{
+    double ox = ray.origin.x - _center.x;
+    double oz = ray.origin.z - _center.z;
+    double a = ray.direction.x * ray.direction.x + ray.direction.z * ray.direction.z;
+    double b = 2 * (ox * ray.direction.x + oz * ray.direction.z);
+    double c = ox * ox + oz * oz - (_radius * _radius);
+    double discriminant = (b * b) - (4 * a * c);
+
+    if (discriminant < 0)
+        return HitRecord();
+
+    double sqrt_discriminant = std::sqrt(discriminant);
+    double t = (-b - sqrt_discriminant) / (2 * a);
+
+    if (t < tMin || t > tMax) {
+        t = (-b + sqrt_discriminant) / (2 * a);
+        if (t < tMin || t > tMax)
+            return HitRecord();
+    }
+    Math::Point3 hit_point = ray.at(t);
+    Math::Vector3 normal; //TODO
+    return HitRecord(hit_point, normal, t, true);
+}
+
 HitRecord Cylinder::intersect(const Ray &ray, double tMin, double tMax) const
 {
-
+    double middle = _height/2; //useful for caps
+    HitRecord body_hit = intersect_body(ray, tMin, tMax);
+    //TODO
 }
 }
