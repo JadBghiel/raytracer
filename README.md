@@ -1,4 +1,4 @@
-TEST:
+# TEST:
 
 we can preview the image without having sfml for now 
 
@@ -9,19 +9,7 @@ from root do this:
 `
 then the png will be rendered in screenshots/
 
-
-
-
-TODO:
-
-- primitive factory ✅
-- light factory ✅
-- parser (jad) ✅
-- MUST:
-
-  - sphere intersection ✅
-  - plane intersection ✅
-  - camera ray generation ✅
+# TODO
 - SHOULD:
 
   - cylinder
@@ -32,4 +20,15 @@ TODO:
 
   - multi threading
   - anti aliasing supersampling
-  -
+
+
+# DONE
+
+- primitive factory ✅
+- light factory ✅
+- parser (jad) ✅
+- MUST:
+
+  - sphere intersection ✅
+  - plane intersection ✅
+  - camera ray generation ✅
