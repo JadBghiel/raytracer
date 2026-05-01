@@ -11,7 +11,6 @@
 #include <cmath>
 
 namespace RayTracer {
-
 // This not short, so to remember it I'll add stepz to it
 //
 // A ray is a line: P(t) = Origin + t * Direction
@@ -33,7 +32,6 @@ namespace RayTracer {
 HitRecord Sphere::intersect(const Ray &ray, double tMin, double tMax) const
 {
     Math::Vector3 oc = ray.origin - _center;
-
     double a = ray.direction.dot(ray.direction);
     double b = 2 * oc.dot(ray.direction);
     double c = oc.dot(oc) - (_radius * _radius);
@@ -54,8 +52,6 @@ HitRecord Sphere::intersect(const Ray &ray, double tMin, double tMax) const
     }
     Math::Point3 hitPoint = ray.at(t);
     Math::Vector3 normal = (hitPoint - _center).normalized();
-
     return HitRecord(hitPoint, normal, t, true, _color);
 }
-
 }
