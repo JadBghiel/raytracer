@@ -124,12 +124,84 @@ bool JsonHelper::tryExtractJsonString(const std::string &content, std::size_t &i
     return false;
 }
 
+bool JsonHelper::tryExtractJsonArray(const std::string &content, std::size_t &index, std::string &arrayStr, SceneParseError &error)
+{
+    index = skipWhitespace(content, index);
+    if (index >= content.size() || content[index] != '[') {
+        error.message = "expected json array (opening '[')";
+        return false;
+    }
+
+    const std::size_t start = index;
+    int bracketCount = 0;
+    bool inString = false;
+    bool escaping = false;
+
+    while (index < content.size()) {
+        const char c = content[index];
+        if (inString) {
+            if (escaping) {
+                escaping = false;
+                ++index;
+                continue;
+            }
+            if (c == '\\') {
+                escaping = true;
+                ++index;
+                continue;
+            }
+            if (c == '"')
+                inString = false;
+            ++index;
+            continue;
+        }
+        if (c == '"') {
+            inString = true;
+            ++index;
+            continue;
+        }
+        if (c == '[') {
+            ++bracketCount;
+            ++index;
+            continue;
+        }
+        if (c == ']') {
+            --bracketCount;
+            ++index;
+            if (bracketCount == 0) {
+                arrayStr = content.substr(start, index - start);
+                return true;
+            }
+            continue;
+        }
+        ++index;
+    }
+    error.message = "untermaed json array";
+    return false;
+}
+
+bool JsonHelper::nextObjectInArray(const std::string &arrayStr, std::size_t &scanIndex, std::string &objectStr, SceneParseError &error)
+{
+    scanIndex = skipWhitespace(arrayStr, scanIndex);
+    while (scanIndex < arrayStr.size() && (arrayStr[scanIndex] == '[' || arrayStr[scanIndex] == ','))
+        ++scanIndex;
+    scanIndex = skipWhitespace(arrayStr, scanIndex);
+
+    if (scanIndex >= arrayStr.size() || arrayStr[scanIndex] == ']')
+        return false;
+
+    if (arrayStr[scanIndex] != '{') {
+        error.message = "array entry must be a json obj";
+        return false;
+    }
+    return tryExtractJsonObject(arrayStr, scanIndex, objectStr, error);
+}
 
 bool JsonHelper::tryExtractJsonObject(const std::string &content, std::size_t &index, std::string &objectStr, SceneParseError &error)
 {
     index = skipWhitespace(content, index);
     if (index >= content.size() || content[index] != '{') {
-        error.message = "expected JSON object (opening '{')";
+        error.message = "expected json obj (opening '{')";
         return false;
     }
 
@@ -184,7 +256,7 @@ bool JsonHelper::tryExtractJsonObject(const std::string &content, std::size_t &i
         ++index;
     }
 
-    error.message = "unterminated JSON object";
+    error.message = "unterminated json obj";
     return false;
 }
 
