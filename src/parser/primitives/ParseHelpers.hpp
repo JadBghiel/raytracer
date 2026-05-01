@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2026
 ** ParseHelpers
 ** File description:
-** Internal declarations for shared primitive parsing helpers
+** internal declarations for shared primitive parsing helpers
 */
 #pragma once
 
