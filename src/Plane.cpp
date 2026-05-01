@@ -42,31 +42,31 @@ namespace RayTracer {
 HitRecord Plane::intersect(const Ray &ray, double tMin, double tMax) const
 {
     Math::Vector3 normal;
-    double originAxis;
-    double directionAxis;
+    double origin_axis;
+    double direction_axis;
     const double eps = 1e-8; //seems to be the appropiate number at least for me, not too much and not to little
 
     if (_axis == "X") {
-        originAxis = ray.origin.x;
-        directionAxis = ray.direction.x;
+        origin_axis = ray.origin.x;
+        direction_axis = ray.direction.x;
         normal = Math::Vector3(1, 0, 0);
     } else if (_axis == "Y") {
-        originAxis = ray.origin.y;
-        directionAxis = ray.direction.y;
+        origin_axis = ray.origin.y;
+        direction_axis = ray.direction.y;
         normal = Math::Vector3(0, 1, 0);
     } else {
-        originAxis = ray.origin.z;
-        directionAxis = ray.direction.z;
+        origin_axis = ray.origin.z;
+        direction_axis = ray.direction.z;
         normal = Math::Vector3(0, 0, 1);
     }
-    if (std::abs(directionAxis) < eps)
+    if (std::abs(direction_axis) < eps)
         return HitRecord();
 
-    double t = (_pos - originAxis) / directionAxis;
+    double t = (_pos - origin_axis) / direction_axis;
 
     if (t < tMin || t > tMax)
         return HitRecord();
-    Math::Point3 hitPoint = ray.at(t);
-    return HitRecord(hitPoint, normal, t, true, _color);
+    Math::Point3 hit_point = ray.at(t);
+    return HitRecord(hit_point, normal, t, true, _color);
 }
 }
