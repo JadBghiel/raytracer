@@ -7,6 +7,7 @@
 #pragma once
 
 #include "Math.hpp"
+#include "Color.hpp"
 
 namespace RayTracer {
 
@@ -16,10 +17,12 @@ public:
     Math::Vector3 normal;
     double t = 0.0;
     bool hit = false;
+    Color color;
 
     HitRecord() = default;
-    HitRecord(const Math::Point3 &hitPoint, const Math::Vector3 &hitNormal, double hitT, bool didHit)
-        : point(hitPoint), normal(hitNormal), t(hitT), hit(didHit)
+    HitRecord(const Math::Point3 &hitPoint, const Math::Vector3 &hitNormal,
+              double hitT, bool didHit, const Color &surfaceColor = Color())
+        : point(hitPoint), normal(hitNormal), t(hitT), hit(didHit), color(surfaceColor)
     {
     }
 };
