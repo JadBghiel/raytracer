@@ -50,8 +50,8 @@ HitRecord Sphere::intersect(const Ray &ray, double tMin, double tMax) const
         if (t < tMin || t > tMax)
             return HitRecord();
     }
-    Math::Point3 hitPoint = ray.at(t);
-    Math::Vector3 normal = (hitPoint - _center).normalized();
-    return HitRecord(hitPoint, normal, t, true, _color);
+    Math::Point3 hit_point = ray.at(t);
+    Math::Vector3 normal = (hit_point - _center).normalized();
+    return HitRecord(hit_point, normal, t, true, _color);
 }
 }
