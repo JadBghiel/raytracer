@@ -6,14 +6,27 @@
 */
 #pragma once
 
+#include <memory>
+#include <string>
+#include "IPrimitive.hpp"
+#include "Color.hpp"
+#include "Math.hpp"
+
 namespace RayTracer {
 
+// centralizes construction of all primitive types
+// maps (type + parameters) -> real IPrimitive instance
 class PrimitiveFactory {
 public:
-    virtual ~PrimitiveFactory() = default;
+    static std::shared_ptr<IPrimitive> makeSphere(
+        const Math::Point3 &center,
+        double radius,
+        const Color &color);
 
-    // factory methods will be added as real primitives are implemented TODO
-    // placehodler here to estbalius the pattern TODO
+    static std::shared_ptr<IPrimitive> makePlane(
+        const std::string &axis,
+        double position,
+        const Color &color);
 };
 
 }
