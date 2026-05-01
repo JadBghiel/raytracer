@@ -11,7 +11,6 @@
 #include <cstdlib>
 
 namespace RayTracer {
-
 // A plane is a flat and infinite surface defined by:
 //      - Axis: (x, y or z) which is its normal direction
 //      - A position along that axis
@@ -67,10 +66,7 @@ HitRecord Plane::intersect(const Ray &ray, double tMin, double tMax) const
 
     if (t < tMin || t > tMax)
         return HitRecord();
-
     Math::Point3 hitPoint = ray.at(t);
-
     return HitRecord(hitPoint, normal, t, true, _color);
 }
-
 }
