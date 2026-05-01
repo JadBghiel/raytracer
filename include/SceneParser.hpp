@@ -10,15 +10,50 @@
 #include <string>
 #include <vector>
 #include "Camera.hpp"
+#include "Math.hpp"
 
 namespace RayTracer {
+
+class ParsedDirectionalLight {
+public:
+    Math::Vector3 direction;
+    double intensity = 1.0;
+};
+
+class ParsedColor {
+public:
+    double r = 0.0;
+    double g = 0.0;
+    double b = 0.0;
+};
+
+class ParsedSphere {
+public:
+    Math::Point3 center;
+    double radius = 1.0;
+    ParsedColor color;
+    Math::Vector3 translation;
+    Math::Vector3 rotation;
+};
+
+class ParsedPlane {
+public:
+    std::string axis = "Y";
+    double position = 0.0;
+    ParsedColor color;
+    Math::Vector3 translation;
+    Math::Vector3 rotation;
+};
 
 class ParsedScene {
 public:
     std::string rawContent;
     std::vector<std::string> topLevelKeys;
     Camera camera;
-    // more fields will be added: lights, primitives
+    double ambientLight = 0.0;
+    std::vector<ParsedDirectionalLight> directionalLights;
+    std::vector<ParsedSphere> spheres;
+    std::vector<ParsedPlane> planes;
 };
 
 class SceneParseError {
