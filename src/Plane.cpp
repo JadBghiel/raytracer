@@ -70,7 +70,7 @@ HitRecord Plane::intersect(const Ray &ray, double tMin, double tMax) const
 
     Math::Point3 hitPoint = ray.at(t);
 
-    return HitRecord(hitPoint, normal, t, true);
+    return HitRecord(hitPoint, normal, t, true, _color);
 }
 
 }
