@@ -36,3 +36,31 @@ Scene SceneLoader::load(const ParsedScene &parsed)
     // directional lights
     for (const auto &dl : parsed.directionalLights)
         builder.addLight(LightFactory::makeDirectionalLight(dl.direction, dl.intensity));
+
+    // spheres: apply translation to center at load time
+    for (const auto &ps : parsed.spheres) {
+        const Math::Point3 center(
+            ps.center.x + ps.translation.x,
+            ps.center.y + ps.translation.y,
+            ps.center.z + ps.translation.z);
+        builder.addPrimitive(
+            PrimitiveFactory::makeSphere(center, ps.radius, normalizeColor(ps.color)));
+    }
+
+    // planes: apply translation along the plane's own axis at load time
+    for (const auto &pp : parsed.planes) {
+        double position = pp.position;
+        if (pp.axis == "X")
+            position += pp.translation.x;
+        else if (pp.axis == "Y")
+            position += pp.translation.y;
+        else
+            position += pp.translation.z;
+        builder.addPrimitive(
+            PrimitiveFactory::makePlane(pp.axis, position, normalizeColor(pp.color)));
+    }
+
+    return builder.build();
+}
+
+}
