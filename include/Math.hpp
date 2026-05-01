@@ -220,6 +220,12 @@ public:
     {
         return Point3(*this) += vector;
     }
+
+    // Vector from 2 existing points
+    Vector3 operator-(const Point3 &other) const
+    {
+        return Vector3(x - other.x, y - other.y, z - other.z);
+    }
 };
 
 using Vector3D = Vector3;
