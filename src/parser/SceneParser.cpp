@@ -7,6 +7,8 @@
 
 #include "SceneParser.hpp"
 #include "parser/CameraParser.hpp"
+#include "parser/LightsParser.hpp"
+#include "parser/PrimitivesParser.hpp"
 
 #include <algorithm>
 #include <cctype>
@@ -201,6 +203,24 @@ SceneParseResult SceneParser::parseText(const std::string &content)
     if (std::find(result.scene.topLevelKeys.begin(), result.scene.topLevelKeys.end(), "camera") != 
         result.scene.topLevelKeys.end()) {
         if (!Parser::CameraParser::tryParseCamera(content, result.scene.camera, result.error)) {
+            result.ok = false;
+            return result;
+        }
+    }
+
+    // parse lights block if present
+    if (std::find(result.scene.topLevelKeys.begin(), result.scene.topLevelKeys.end(), "lights") !=
+        result.scene.topLevelKeys.end()) {
+        if (!Parser::LightsParser::tryParseLights(content, result.scene, result.error)) {
+            result.ok = false;
+            return result;
+        }
+    }
+
+    // parse primitives block if present
+    if (std::find(result.scene.topLevelKeys.begin(), result.scene.topLevelKeys.end(), "primitives") !=
+        result.scene.topLevelKeys.end()) {
+        if (!Parser::PrimitivesParser::tryParsePrimitives(content, result.scene, result.error)) {
             result.ok = false;
             return result;
         }
