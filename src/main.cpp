@@ -9,6 +9,8 @@
 #include <string>
 
 #include "SceneParser.hpp"
+#include "SceneLoader.hpp"
+#include "Renderer.hpp"
 
 namespace {
 
@@ -56,5 +58,15 @@ int main(int argc, char **argv)
     if (!parseResult.ok)
         return print_error("error: " + parseResult.error.toString());
 
+    const RayTracer::Scene scene = RayTracer::SceneLoader::load(parseResult.scene);
+
+    const std::string outputPath = "output.ppm";
+    std::cout << "rendering " << scene.camera.resolutionWidth << "x"
+              << scene.camera.resolutionHeight << " ... ";
+    std::cout.flush();
+
+    RayTracer::Renderer::render(scene, outputPath);
+
+    std::cout << "done -> " << outputPath << "\n";
     return success_exit_code;
 }
