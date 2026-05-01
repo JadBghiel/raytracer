@@ -2,11 +2,11 @@
 ** EPITECH PROJECT, 2026
 ** PlaneParser
 ** File description:
-** Parses one plane JSON object into a ParsedPlane
+** parses one plane json object into a ParsedPlane
 */
 
-#include "PlaneParser.hpp"
-#include "ParseHelpers.hpp"
+#include "parser/primitives/PlaneParser.hpp"
+#include "parser/primitives/ParseHelpers.hpp"
 #include "parser/JsonHelper.hpp"
 
 namespace RayTracer {

@@ -5,8 +5,8 @@
 ** Parses one sphere json object into a ParsedSphere
 */
 
-#include "SphereParser.hpp"
-#include "ParseHelpers.hpp"
+#include "parser/primitives/SphereParser.hpp"
+#include "parser/primitives/ParseHelpers.hpp"
 #include "parser/JsonHelper.hpp"
 
 namespace RayTracer {

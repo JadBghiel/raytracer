@@ -5,8 +5,8 @@
 ** DirectionalArrayParser
 */
 
-#include "DirectionalArrayParser.hpp"
-#include "DirectionalLightParser.hpp"
+#include "parser/lights/DirectionalArrayParser.hpp"
+#include "parser/lights/DirectionalLightParser.hpp"
 #include "parser/JsonHelper.hpp"
 
 namespace RayTracer {

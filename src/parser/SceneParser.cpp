@@ -79,7 +79,7 @@ SceneParseResult SceneParser::parseText(const std::string &content)
     if (first >= content.size() || content[first] != '{') {
         result.error.line = 1;
         result.error.column = 1;
-        result.error.message = "root scene value must be a JSON object";
+        result.error.message = "root scene value must be a json object";
         return result;
     }
 
@@ -192,7 +192,7 @@ SceneParseResult SceneParser::parseText(const std::string &content)
         result.error.line = cursor.line;
         result.error.column = cursor.column;
         result.error.key = lastKey;
-        result.error.message = "unclosed JSON delimiter";
+        result.error.message = "unclosed json delimiter";
         return result;
     }
 

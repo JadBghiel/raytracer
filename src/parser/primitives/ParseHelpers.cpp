@@ -5,7 +5,7 @@
 ** Shared parsing helpers used by sphere and plane parsers
 */
 
-#include "ParseHelpers.hpp"
+#include "parser/primitives/ParseHelpers.hpp"
 #include "parser/JsonHelper.hpp"
 
 namespace RayTracer {

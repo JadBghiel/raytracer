@@ -7,7 +7,7 @@
 
 #include "parser/LightsParser.hpp"
 #include "parser/JsonHelper.hpp"
-#include "lights/DirectionalArrayParser.hpp"
+#include "parser/lights/DirectionalArrayParser.hpp"
 
 namespace RayTracer {
 namespace Parser {

@@ -7,8 +7,8 @@
 
 #include "parser/PrimitivesParser.hpp"
 #include "parser/JsonHelper.hpp"
-#include "primitives/SphereParser.hpp"
-#include "primitives/PlaneParser.hpp"
+#include "parser/primitives/SphereParser.hpp"
+#include "parser/primitives/PlaneParser.hpp"
 #include <functional>
 
 namespace RayTracer {
