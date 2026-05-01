@@ -59,3 +59,29 @@ Ray Renderer::cameraRay(const Camera &camera, int px, int py)
     return Ray(camera.position, dir);
 }
 
+// flat shading (ambient + directional Lambert)
+//
+// totalLight = sum of all ILight::contribute() calls
+// finalColor = hitColor * clamp(totalLight, 0, 1)  (component-wise)
+
+Color Renderer::shade(const HitRecord &hit, const Scene &scene)
+{
+    Math::Vector3 totalLight(0.0, 0.0, 0.0);
+    for (const auto &light : scene.lights)
+        totalLight += light->contribute(hit.point, hit.normal);
+
+    const double lr = std::min(1.0, std::max(0.0, totalLight.x));
+    const double lg = std::min(1.0, std::max(0.0, totalLight.y));
+    const double lb = std::min(1.0, std::max(0.0, totalLight.z));
+
+    return Color(hit.color.r * lr, hit.color.g * lg, hit.color.b * lb);
+}
+
+// ppm writer + pixel loop
+//
+// for each pixel:
+//   1. cast ray from camera through pixel centre.
+//   2. intersect all primitives, keep nearest hit (smallest positive t)
+//   3. shade or use background colour
+// write p3 ppm to outputPath
+
