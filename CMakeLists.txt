@@ -39,6 +39,8 @@ add_executable(raytracer
     src/parser/SceneParser.cpp
     src/parser/CameraParser.cpp
     src/parser/LightsParser.cpp
+    src/parser/lights/DirectionalArrayParser.cpp
+    src/parser/lights/DirectionalLightParser.cpp
     src/parser/PrimitivesParser.cpp
     src/parser/primitives/ParseHelpers.cpp
     src/parser/primitives/SphereParser.cpp
@@ -46,7 +48,7 @@ add_executable(raytracer
     src/parser/JsonHelper.cpp
 )
 
-target_include_directories(raytracer PRIVATE include src/parser/primitives)
+target_include_directories(raytracer PRIVATE include src/parser/primitives src/parser/lights)
 target_compile_options(raytracer PRIVATE -Wall -Wextra -Werror)
 
 add_custom_target(fclean
