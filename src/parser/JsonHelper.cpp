@@ -88,6 +88,43 @@ bool JsonHelper::tryExtractJsonNumber(const std::string &content, std::size_t &i
     }
 }
 
+bool JsonHelper::tryExtractJsonString(const std::string &content, std::size_t &index, std::string &value, SceneParseError &error)
+{
+    index = skipWhitespace(content, index);
+    if (index >= content.size() || content[index] != '"') {
+        error.message = "expected string value (opening '\"')";
+        return false;
+    }
+    ++index;
+    std::string result;
+    bool escaping = false;
+
+    while (index < content.size()) {
+        const char c = content[index];
+        if (escaping) {
+            escaping = false;
+            result.push_back(c);
+            ++index;
+            continue;
+        }
+        if (c == '\\') {
+            escaping = true;
+            ++index;
+            continue;
+        }
+        if (c == '"') {
+            ++index;
+            value = result;
+            return true;
+        }
+        result.push_back(c);
+        ++index;
+    }
+    error.message = "unterminated string vlaue";
+    return false;
+}
+
+
 bool JsonHelper::tryExtractJsonObject(const std::string &content, std::size_t &index, std::string &objectStr, SceneParseError &error)
 {
     index = skipWhitespace(content, index);
