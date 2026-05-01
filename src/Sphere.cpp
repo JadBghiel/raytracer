@@ -55,7 +55,7 @@ HitRecord Sphere::intersect(const Ray &ray, double tMin, double tMax) const
     Math::Point3 hitPoint = ray.at(t);
     Math::Vector3 normal = (hitPoint - _center).normalized();
 
-    return HitRecord(hitPoint, normal, t, true);
+    return HitRecord(hitPoint, normal, t, true, _color);
 }
 
 }
