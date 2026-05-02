@@ -53,7 +53,12 @@ HitRecord Cylinder::intersect_body(const Ray &ray, double tMin, double tMax) con
             return HitRecord();
     }
     Math::Point3 hit_point = ray.at(t);
-    Math::Vector3 normal; //TODO
+    Math::Vector3 normal =
+        {
+            (hit_point.x - _center.x) / _radius,
+            0,
+            (hit_point.z - _center.z) / _radius
+        };
     return HitRecord(hit_point, normal, t, true);
 }
 
