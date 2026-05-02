@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Sphere.hpp"
 #include "Plane.hpp"
+#include "Cylinder.hpp"
 
 // tested by gerardinho
 
@@ -39,6 +40,36 @@ int main()
     RayTracer::HitRecord rec4 = plane.intersect(rayParallel, 0.001, 1e9);
     std::cout << "[parallel]    expected: NO HIT   | got: ";
     std::cout << (rec4.hit ? "HIT t=" + std::to_string(rec4.t) : "NO HIT") << "\n";
+
+    // --- CYLINDER ---
+    // cylinder at (0,0,-5), radius=1, height=4
+    RayTracer::Cylinder cylinder({0, 0, -5}, 1.0, 4.0, {0, 0, 255});
+
+    std::cout << "\n--- CYLINDER TESTS ---\n";
+
+    // ray pointing straight at the body → should hit
+    RayTracer::Ray rayBody({0,0,0}, {0,0,-1});
+    RayTracer::HitRecord rec5 = cylinder.intersect(rayBody, 0.001, 1e9);
+    std::cout << "[body hit]    expected: HIT t=4  | got: ";
+    std::cout << (rec5.hit ? "HIT t=" + std::to_string(rec5.t) : "NO HIT") << "\n";
+
+    // ray pointing at top cap from above → should hit
+    RayTracer::Ray rayTop({0, 5, -5}, {0,-1,0});
+    RayTracer::HitRecord rec6 = cylinder.intersect(rayTop, 0.001, 1e9);
+    std::cout << "[top cap]     expected: HIT t=3  | got: ";
+    std::cout << (rec6.hit ? "HIT t=" + std::to_string(rec6.t) : "NO HIT") << "\n";
+
+    // ray pointing at bottom cap from below → should hit
+    RayTracer::Ray rayBot({0, -5, -5}, {0,1,0});
+    RayTracer::HitRecord rec7 = cylinder.intersect(rayBot, 0.001, 1e9);
+    std::cout << "[bot cap]     expected: HIT t=3  | got: ";
+    std::cout << (rec7.hit ? "HIT t=" + std::to_string(rec7.t) : "NO HIT") << "\n";
+
+    // ray missing completely → should NOT hit
+    RayTracer::Ray rayMiss2({5,0,0}, {0,0,-1});
+    RayTracer::HitRecord rec8 = cylinder.intersect(rayMiss2, 0.001, 1e9);
+    std::cout << "[miss]        expected: NO HIT   | got: ";
+    std::cout << (rec8.hit ? "HIT t=" + std::to_string(rec8.t) : "NO HIT") << "\n";
 
     std::cout << "\n========================================\n";
     return 0;
