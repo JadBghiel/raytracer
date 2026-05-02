@@ -6,8 +6,12 @@
 */
 
 #include "PrimitiveFactory.hpp"
+#include "IPrimitive.hpp"
+#include "Math.hpp"
 #include "Sphere.hpp"
 #include "Plane.hpp"
+#include "Cylinder.hpp"
+#include <memory>
 
 namespace RayTracer {
 
@@ -25,6 +29,15 @@ std::shared_ptr<IPrimitive> PrimitiveFactory::makePlane(
     const Color &color)
 {
     return std::make_shared<Plane>(axis, position, color);
+}
+
+std::shared_ptr<IPrimitive> PrimitiveFactory::makeCylinder(
+    const Math::Point3 &center,
+    double radius,
+    double height,
+    const Color &color)
+{
+    return std::make_shared<Cylinder>(center, radius, height, color);
 }
 
 }
