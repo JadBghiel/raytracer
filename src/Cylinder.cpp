@@ -10,6 +10,7 @@
 #include "HitRecord.hpp"
 #include "Math.hpp"
 #include <cmath>
+#include <cstdlib>
 
 namespace RayTracer {
 // A cylinder is a circle extended along the Y axis.
@@ -31,6 +32,21 @@ namespace RayTracer {
 //  After finding t, check X and Z are within the circle radius
 //
 // We keep the nearest valid hit across the body and both caps, just like in any other shape.
+
+bool Cylinder::is_height(const Math::Point3 &point) const
+{
+    double half_cylinder = _height / 2;
+
+    return point.y >= (_center.y - half_cylinder) && point.y <= (_center.y + half_cylinder);
+}
+
+bool Cylinder::is_cap(const Math::Point3 &point) const
+{
+    double dx = point.x - _center.x;
+    double dz = point.z - _center.z;
+
+    return (dx * dx + dz * dz) <= (_radius * _radius);
+}
 
 HitRecord Cylinder::intersect_body(const Ray &ray, double tMin, double tMax) const
 {
@@ -62,10 +78,32 @@ HitRecord Cylinder::intersect_body(const Ray &ray, double tMin, double tMax) con
     return HitRecord(hit_point, normal, t, true);
 }
 
+HitRecord Cylinder::intersect_cap(const Ray &ray, double tMin, double tMax, double cap_y) const
+{
+    const double eps = 1e-8;
+    double t = (cap_y - ray.origin.y) / ray.direction.y;
+
+    if (std::abs(ray.direction.y) < eps)
+        return HitRecord();
+    if (t < tMin || t > tMax)
+        return HitRecord();
+    Math::Point3 hit_point = ray.at(t);
+    if (!is_cap(hit_point))
+        return HitRecord();
+    Math::Vector3 normal;
+    if (cap_y > _center.y)
+        normal = {0, 1, 0};
+    else
+        normal = {0, -1, 0};
+    return HitRecord(hit_point, normal, t, true);
+}
+
 HitRecord Cylinder::intersect(const Ray &ray, double tMin, double tMax) const
 {
     double middle = _height/2; //useful for caps
     HitRecord body_hit = intersect_body(ray, tMin, tMax);
+    HitRecord top_hit = intersect_cap(ray, tMin, tMax, _center.y + middle);
+    HitRecord bottom_hit = intersect_cap(ray, tMin, tMax, _center.y - middle);
     //TODO
 }
 }

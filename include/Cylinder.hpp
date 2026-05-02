@@ -26,6 +26,9 @@ class Cylinder : public IPrimitive
         HitRecord intersect(const Ray &ray, double tMin, double tMax) const override;
 
         HitRecord intersect_body(const Ray &ray, double tMin, double tMax) const;
+        HitRecord intersect_cap(const Ray &ray, double tMin, double tMax, double cap_y) const;
+        bool is_cap(const Math::Point3 &point) const;
+        bool is_height(const Math::Point3 &point) const;
 };
 }
 
