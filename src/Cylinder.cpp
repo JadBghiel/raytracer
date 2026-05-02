@@ -11,6 +11,7 @@
 #include "Math.hpp"
 #include <cmath>
 #include <cstdlib>
+#include <limits>
 
 namespace RayTracer {
 // A cylinder is a circle extended along the Y axis.
@@ -61,13 +62,16 @@ HitRecord Cylinder::intersect_body(const Ray &ray, double tMin, double tMax) con
         return HitRecord();
 
     double sqrt_discriminant = std::sqrt(discriminant);
-    double t = (-b - sqrt_discriminant) / (2 * a);
+    double t1 = (-b - sqrt_discriminant) / (2 * a);
+    double t2 = (-b + sqrt_discriminant) / (2 * a);
+    double t;
 
-    if (t < tMin || t > tMax) {
-        t = (-b + sqrt_discriminant) / (2 * a);
-        if (t < tMin || t > tMax)
-            return HitRecord();
-    }
+    if (t1 >= tMin && t1 <= tMax && is_height(ray.at(t1)))
+        t = t1;
+    else if (t2 >= tMin && t2 <= tMax && is_height(ray.at(t2)))
+        t = t2;
+    else
+        return HitRecord();
     Math::Point3 hit_point = ray.at(t);
     Math::Vector3 normal =
         {
@@ -75,16 +79,17 @@ HitRecord Cylinder::intersect_body(const Ray &ray, double tMin, double tMax) con
             0,
             (hit_point.z - _center.z) / _radius
         };
-    return HitRecord(hit_point, normal, t, true);
+    return HitRecord(hit_point, normal, t, true, _color);
 }
 
 HitRecord Cylinder::intersect_cap(const Ray &ray, double tMin, double tMax, double cap_y) const
 {
     const double eps = 1e-8;
-    double t = (cap_y - ray.origin.y) / ray.direction.y;
+    double t;
 
     if (std::abs(ray.direction.y) < eps)
         return HitRecord();
+    t = (cap_y - ray.origin.y) / ray.direction.y;
     if (t < tMin || t > tMax)
         return HitRecord();
     Math::Point3 hit_point = ray.at(t);
@@ -95,15 +100,30 @@ HitRecord Cylinder::intersect_cap(const Ray &ray, double tMin, double tMax, doub
         normal = {0, 1, 0};
     else
         normal = {0, -1, 0};
-    return HitRecord(hit_point, normal, t, true);
+    return HitRecord(hit_point, normal, t, true, _color);
 }
 
 HitRecord Cylinder::intersect(const Ray &ray, double tMin, double tMax) const
 {
     double middle = _height/2; //useful for caps
+    double min_t = std::numeric_limits<double>::infinity();
     HitRecord body_hit = intersect_body(ray, tMin, tMax);
     HitRecord top_hit = intersect_cap(ray, tMin, tMax, _center.y + middle);
     HitRecord bottom_hit = intersect_cap(ray, tMin, tMax, _center.y - middle);
-    //TODO
+    HitRecord nearest;
+
+    if (body_hit.hit && body_hit.t < min_t) {
+        nearest = body_hit;
+        min_t = body_hit.t;
+    }
+    if (top_hit.hit && top_hit.t < min_t) {
+        nearest = top_hit;
+        min_t = top_hit.t;
+    }
+    if (bottom_hit.hit && bottom_hit.t < min_t) {
+        nearest = bottom_hit;
+        min_t = bottom_hit.t;
+    }
+    return nearest;
 }
 }
