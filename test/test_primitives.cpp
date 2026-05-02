@@ -4,6 +4,8 @@
 #include "Cylinder.hpp"
 
 // tested by gerardinho
+// compile with:
+//  g++ -std=c++17 -I include test/test_primitives.cpp src/Sphere.cpp src/Plane.cpp src/Cylinder.cpp -o test_primitives && ./test_primitives
 
 int main()
 {
