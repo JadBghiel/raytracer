@@ -28,7 +28,7 @@ public:
         double position,
         const Color &color);
     
-    static std::shared_ptr<IPrimitive> makeSphere(
+    static std::shared_ptr<IPrimitive> makeCylinder(
         const Math::Point3 &center,
         double radius,
         double height,
