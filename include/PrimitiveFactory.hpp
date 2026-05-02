@@ -27,6 +27,12 @@ public:
         const std::string &axis,
         double position,
         const Color &color);
+    
+    static std::shared_ptr<IPrimitive> makeSphere(
+        const Math::Point3 &center,
+        double radius,
+        double height,
+        const Color &color);
 };
 
 }
