@@ -13,7 +13,6 @@
 #include <string>
 
 namespace RayTracer {
-
 class Plane : public IPrimitive
 {
     private:
@@ -25,7 +24,6 @@ class Plane : public IPrimitive
         ~Plane() = default;
         HitRecord intersect(const Ray &ray, double tMin, double tMax) const override;
 };
-
 }
 
 #endif

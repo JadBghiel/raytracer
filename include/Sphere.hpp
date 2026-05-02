@@ -13,7 +13,6 @@
 #include "Math.hpp"
 
 namespace RayTracer {
-
 class Sphere : public IPrimitive
 {
     private:
@@ -24,9 +23,7 @@ class Sphere : public IPrimitive
         Sphere(const Math::Point3D &center, double radius, const Color &color) : _center(center), _radius(radius), _color(color) {};
         ~Sphere() = default;
         HitRecord intersect(const Ray &ray, double tMin, double tMax) const override;
-
 };
-
 }
 
 #endif
