@@ -21,7 +21,7 @@ class Cone : public IPrimitive
         double _height;
         Color _color;
     public:
-        Cone(Math::Point3 &center, double radius, double height, Color &color) : _center(center), _radius(radius), _height(height), _color(color) {};
+        Cone(const Math::Point3 &center, double radius, double height, const Color &color) : _center(center), _radius(radius), _height(height), _color(color) {};
         ~Cone() = default;
         HitRecord intersect(const Ray &ray, double tMin, double tMax) const override;
 };
