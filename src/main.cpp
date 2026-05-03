@@ -14,20 +14,17 @@
 
 namespace {
 
-constexpr int success_exit_code = 0;
-constexpr int error_exit_code = 84;
-
 int print_error(const std::string &message)
 {
     std::cerr << message << '\n';
-    return error_exit_code;
+    return 84;
 }
 
 int print_help()
 {
     std::cout << "USAGE: ./raytracer <SCENE_FILE>\n"
               << "  SCENE_FILE: scene configuration\n";
-    return success_exit_code;
+    return 0;
 }
 
 bool scene_file_exists(const std::string &path)
@@ -68,5 +65,5 @@ int main(int argc, char **argv)
     RayTracer::Renderer::render(scene, outputPath);
 
     std::cout << "done -> " << outputPath << "\n";
-    return success_exit_code;
+    return 0;
 }
