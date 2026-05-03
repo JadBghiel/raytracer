@@ -12,7 +12,6 @@ then the png will be rendered in screenshots/
 # TODO
 - SHOULD:
 
-  - cylinder
   - cone
   - rotation transformation
   - drop shadows
@@ -32,3 +31,6 @@ then the png will be rendered in screenshots/
   - sphere intersection ✅
   - plane intersection ✅
   - camera ray generation ✅
+
+- SHOULD:
+  - cylinder ✅
