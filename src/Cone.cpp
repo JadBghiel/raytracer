@@ -9,6 +9,7 @@
 #include "HitRecord.hpp"
 #include "Math.hpp"
 #include <cmath>
+#include <cstdlib>
 
 namespace RayTracer {
 // A cone is similar to a cylinder, except it narrows to a point at the top.
@@ -48,6 +49,14 @@ bool Cone::is_height(const Math::Point3 &point) const
     return point.y >= _center.y && point.y <= apex;
 }
 
+bool Cone::is_cap(const Math::Point3 &point) const
+{
+    double dx = point.x - _center.x;
+    double dz = point.z - _center.z;
+
+    return (dx * dx + dz * dz) <= (_radius * _radius);
+}
+
 HitRecord Cone::intersect_body(const Ray &ray, double tMin, double tMax) const
 {
     double slope = _radius / _height;
@@ -85,9 +94,27 @@ HitRecord Cone::intersect_body(const Ray &ray, double tMin, double tMax) const
     return HitRecord(hit_point, normal, t, true, _color);
 }
 
+HitRecord Cone::intersect_cap(const Ray &ray, double tMin, double tMax, double cap_y) const
+{
+    const double eps = 1e-8;
+    double t;
+
+    if (std::abs(ray.direction.y) < eps)
+        return HitRecord();
+    t = (cap_y - ray.origin.y) / ray.direction.y;
+    if (t <= tMin || t >= tMax)
+        return HitRecord();
+    Math::Point3 hit_point = ray.at(t);
+    if (!is_cap(hit_point))
+        return HitRecord();
+    Math::Vector3 normal = {0, -1, 0};
+    return HitRecord(hit_point, normal, t, true, _color);
+}
+
 HitRecord Cone::intersect(const Ray &ray, double tMin, double tMax) const
 {
     HitRecord body_hit = intersect_body(ray, tMin, tMax);
+    HitRecord base_hit = intersect_cap(ray, tMin, tMax, _center.y);
     //TODO
     return HitRecord();
 }
