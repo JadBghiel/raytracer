@@ -36,6 +36,8 @@ add_executable(raytracer
     src/LightFactory.cpp
     src/Sphere.cpp
     src/Plane.cpp
+    src/Cylinder.cpp
+    src/Cone.cpp
     src/parser/SceneParser.cpp
     src/parser/CameraParser.cpp
     src/parser/LightsParser.cpp
@@ -45,6 +47,7 @@ add_executable(raytracer
     src/parser/primitives/ParseHelpers.cpp
     src/parser/primitives/SphereParser.cpp
     src/parser/primitives/PlaneParser.cpp
+    src/parser/primitives/CylinderParser.cpp
     src/parser/JsonHelper.cpp
 )
 
