@@ -13,7 +13,7 @@ then the png will be rendered in screenshots/
 - SHOULD:
 
   - cone
-  - rotation transformation
+  - rotation (parsed but not implemented yet)
   - drop shadows
 - extra important stuff tho but at the end
 
@@ -31,6 +31,7 @@ then the png will be rendered in screenshots/
   - sphere intersection ✅
   - plane intersection ✅
   - camera ray generation ✅
+  - transformation ✅
 
 - SHOULD:
   - cylinder ✅
