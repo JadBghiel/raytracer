@@ -10,6 +10,7 @@
 #include "Math.hpp"
 #include <cmath>
 #include <cstdlib>
+#include <limits>
 
 namespace RayTracer {
 // A cone is similar to a cylinder, except it narrows to a point at the top.
@@ -113,9 +114,19 @@ HitRecord Cone::intersect_cap(const Ray &ray, double tMin, double tMax, double c
 
 HitRecord Cone::intersect(const Ray &ray, double tMin, double tMax) const
 {
+    double min_t = std::numeric_limits<double>::infinity();
     HitRecord body_hit = intersect_body(ray, tMin, tMax);
     HitRecord base_hit = intersect_cap(ray, tMin, tMax, _center.y);
-    //TODO
-    return HitRecord();
+    HitRecord nearest;
+
+    if (body_hit.hit && body_hit.t < min_t) {
+        nearest = body_hit;
+        min_t = body_hit.t;
+    }
+    if (base_hit.hit && base_hit.t < min_t) {
+        nearest = base_hit;
+        min_t = base_hit.t;
+    }
+    return nearest;
 }
 }
