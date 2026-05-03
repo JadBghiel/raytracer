@@ -60,6 +60,16 @@ Scene SceneLoader::load(const ParsedScene &parsed)
             PrimitiveFactory::makePlane(pp.axis, position, normalizeColor(pp.color)));
     }
 
+    // cylinders: apply translation to center at load time
+    for (const auto &pc : parsed.cylinders) {
+        const Math::Point3 center(
+            pc.center.x + pc.translation.x,
+            pc.center.y + pc.translation.y,
+            pc.center.z + pc.translation.z);
+        builder.addPrimitive(
+            PrimitiveFactory::makeCylinder(center, pc.radius, pc.height, normalizeColor(pc.color)));
+    }
+
     return builder.build();
 }
 
