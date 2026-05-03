@@ -9,6 +9,7 @@
 #include "parser/JsonHelper.hpp"
 #include "parser/primitives/SphereParser.hpp"
 #include "parser/primitives/PlaneParser.hpp"
+#include "parser/primitives/CylinderParser.hpp"
 #include <functional>
 
 namespace RayTracer {
@@ -88,6 +89,17 @@ bool PrimitivesParser::tryParsePrimitives(const std::string &content, ParsedScen
             if (!Primitives::parsePlane(obj, plane, err))
                 return false;
             scene.planes.push_back(plane);
+            return true;
+        }, error))
+        return false;
+
+    // parse cylinders
+    if (!parsePrimitiveArray(primitivesObj, "cylinders",
+        [&scene](const std::string &obj, SceneParseError &err) {
+            ParsedCylinder cylinder;
+            if (!Primitives::parseCylinder(obj, cylinder, err))
+                return false;
+            scene.cylinders.push_back(cylinder);
             return true;
         }, error))
         return false;
