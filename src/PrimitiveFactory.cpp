@@ -6,11 +6,13 @@
 */
 
 #include "PrimitiveFactory.hpp"
+#include "Color.hpp"
 #include "IPrimitive.hpp"
 #include "Math.hpp"
 #include "Sphere.hpp"
 #include "Plane.hpp"
 #include "Cylinder.hpp"
+#include "Cone.hpp"
 #include <memory>
 
 namespace RayTracer {
@@ -38,6 +40,15 @@ std::shared_ptr<IPrimitive> PrimitiveFactory::makeCylinder(
     const Color &color)
 {
     return std::make_shared<Cylinder>(center, radius, height, color);
+}
+
+std::shared_ptr<IPrimitive> PrimitiveFactory::makeCone(
+    const Math::Point3 &center,
+    double radius,
+    double height,
+    const Color &color)
+{
+    return std::make_shared<Cone>(center, radius, height, color);
 }
 
 }
