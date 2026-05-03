@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2026
 ** CylinderParser
 ** File description:
-** parses one cylinder json object into a ParsedCylinder
+** CylinderParser
 */
 
 #include "parser/primitives/CylinderParser.hpp"
@@ -105,6 +105,6 @@ bool parseCylinder(const std::string &cylObj, ParsedCylinder &cyl, SceneParseErr
     return true;
 }
 
-}
-}
+        }
+    }
 }

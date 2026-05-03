@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2026
-** raytracer
+** main
 ** File description:
 ** main
 */

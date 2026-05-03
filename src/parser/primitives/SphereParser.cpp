@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2026
 ** SphereParser
 ** File description:
-** Parses one sphere json object into a ParsedSphere
+** SphereParser
 */
 
 #include "parser/primitives/SphereParser.hpp"
@@ -86,6 +86,6 @@ bool parseSphere(const std::string &sphereObj, ParsedSphere &sphere, SceneParseE
     return true;
 }
 
-}
-}
+        }
+    }
 }

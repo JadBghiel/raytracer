@@ -26,5 +26,5 @@ private:
     static bool isWhitespace(char c);
 };
 
-}
+    }
 }

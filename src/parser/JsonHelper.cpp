@@ -260,5 +260,5 @@ bool JsonHelper::tryExtractJsonObject(const std::string &content, std::size_t &i
     return false;
 }
 
-}
+    }
 }

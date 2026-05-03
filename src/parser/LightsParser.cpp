@@ -85,5 +85,5 @@ bool LightsParser::tryParseLights(const std::string &content, ParsedScene &scene
         scene.directionalLights, error);
 }
 
-}
+    }
 }

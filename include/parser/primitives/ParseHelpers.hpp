@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2026
 ** ParseHelpers
 ** File description:
-** shared parsing helpers for primitive sub parsers
+** ParseHelpers
 */
 #pragma once
 
@@ -21,6 +21,6 @@ bool parseOptionalVec3(const std::string &obj, const std::string &key,
                        Math::Vector3 &vec, const std::string &prefix,
                        SceneParseError &error);
 
-}
-}
+        }
+    }
 }

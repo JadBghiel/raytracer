@@ -15,6 +15,6 @@ namespace Lights {
 
 bool parseDirectionVector(const std::string &lightObj, Math::Vector3 &direction, SceneParseError &error);
 
-}
-}
+        }
+    }
 }

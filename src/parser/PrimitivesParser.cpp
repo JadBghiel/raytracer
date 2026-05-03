@@ -107,5 +107,5 @@ bool PrimitivesParser::tryParsePrimitives(const std::string &content, ParsedScen
     return true;
 }
 
-}
+    }
 }

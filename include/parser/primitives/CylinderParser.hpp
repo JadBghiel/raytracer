@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2026
 ** CylinderParser
 ** File description:
-** internal declaration for cylinder json object parsing
+** CylinderParser
 */
 #pragma once
 
@@ -16,6 +16,6 @@ namespace Primitives {
 bool parseCylinder(const std::string &cylObj, ParsedCylinder &cyl,
                    SceneParseError &error);
 
-}
-}
+        }
+    }
 }

@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2026
 ** PlaneParser
 ** File description:
-** parses one plane json object into a ParsedPlane
+** PlaneParser
 */
 
 #include "parser/primitives/PlaneParser.hpp"
@@ -69,6 +69,6 @@ bool parsePlane(const std::string &planeObj, ParsedPlane &plane, SceneParseError
     return true;
 }
 
-}
-}
+        }
+    }
 }

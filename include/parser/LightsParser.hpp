@@ -17,5 +17,5 @@ public:
     static bool tryParseLights(const std::string &content, ParsedScene &scene, SceneParseError &error);
 };
 
-}
+    }
 }

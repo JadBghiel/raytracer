@@ -61,6 +61,6 @@ bool parseDirectionVector(const std::string &lightObj, Math::Vector3 &direction,
     return true;
 }
 
-}
-}
+        }
+    }
 }

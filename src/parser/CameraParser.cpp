@@ -232,5 +232,5 @@ bool CameraParser::tryParseCamera(const std::string &content, Camera &camera, Sc
     return true;
 }
 
-}
+    }
 }

@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2026
 ** ParseHelpers
 ** File description:
-** Shared parsing helpers used by sphere and plane parsers
+** ParseHelpers
 */
 
 #include "parser/primitives/ParseHelpers.hpp"
@@ -162,6 +162,6 @@ bool parseOptionalVec3(const std::string &obj, const std::string &key, Math::Vec
     return true;
 }
 
-}
-}
+        }
+    }
 }

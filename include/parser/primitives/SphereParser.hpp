@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2026
 ** SphereParser
 ** File description:
-** internal declaration for sphere json object parsing
+** SphereParser
 */
 #pragma once
 
@@ -16,6 +16,6 @@ namespace Primitives {
 bool parseSphere(const std::string &sphereObj, ParsedSphere &sphere,
                  SceneParseError &error);
 
-}
-}
+        }
+    }
 }

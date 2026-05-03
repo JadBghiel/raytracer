@@ -18,5 +18,5 @@ public:
     static bool tryParseCamera(const std::string &content, Camera &camera, SceneParseError &error);
 };
 
-}
+    }
 }

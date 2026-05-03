@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2026
 ** PlaneParser
 ** File description:
-** internal declaration for plane json object parsing
+** PlaneParser
 */
 #pragma once
 
@@ -16,6 +16,6 @@ namespace Primitives {
 bool parsePlane(const std::string &planeObj, ParsedPlane &plane,
                 SceneParseError &error);
 
-}
-}
+        }
+    }
 }

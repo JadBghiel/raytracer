@@ -17,5 +17,5 @@ public:
     static bool tryParsePrimitives(const std::string &content, ParsedScene &scene, SceneParseError &error);
 };
 
-}
+    }
 }

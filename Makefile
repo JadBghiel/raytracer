@@ -1,8 +1,8 @@
 #
 ## EPITECH PROJECT, 2026
-## raytracer
+## Makefile
 ## File description:
-## main
+## Makefile
 #
 
 NAME = raytracer

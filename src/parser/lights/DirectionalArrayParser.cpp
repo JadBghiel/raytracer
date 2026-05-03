@@ -75,6 +75,6 @@ bool parseDirectionalArray(const std::string &lightsObj, double defaultIntensity
     return true;
 }
 
-}
-}
+        }
+    }
 }

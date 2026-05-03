@@ -17,6 +17,6 @@ namespace Lights {
 bool parseDirectionalArray(const std::string &lightsObj, double defaultIntensity,
     std::vector<ParsedDirectionalLight> &directionalLights, SceneParseError &error);
 
-}
-}
+        }
+    }
 }
