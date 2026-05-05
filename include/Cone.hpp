@@ -20,8 +20,13 @@ class Cone : public IPrimitive
         double _radius;
         double _height;
         Color _color;
+
+        bool is_height(const Math::Point3 &point) const;
+        bool is_cap(const Math::Point3 &point) const;
+        HitRecord intersect_body(const Ray &ray, double tMin, double tMax) const;
+        HitRecord intersect_cap(const Ray &ray, double tMin, double tMax, double cap_y) const;
     public:
-        Cone(Math::Point3 &center, double radius, double height, Color &color) : _center(center), _radius(radius), _height(height), _color(color) {};
+        Cone(const Math::Point3 &center, double radius, double height, const Color &color) : _center(center), _radius(radius), _height(height), _color(color) {};
         ~Cone() = default;
         HitRecord intersect(const Ray &ray, double tMin, double tMax) const override;
 };

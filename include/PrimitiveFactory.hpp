@@ -33,6 +33,11 @@ public:
         double radius,
         double height,
         const Color &color);
+    static std::shared_ptr<IPrimitive> makeCone(
+        const Math::Point3 &center,
+        double radius,
+        double height,
+        const Color &color);
 };
 
 }
