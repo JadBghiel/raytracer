@@ -55,6 +55,16 @@ public:
     Math::Vector3 rotation;
 };
 
+class ParsedCone {
+public:
+    Math::Point3 center;
+    double radius = 1.0;
+    double height = 1.0;
+    ParsedColor color;
+    Math::Vector3 translation;
+    Math::Vector3 rotation;
+};
+
 class ParsedScene {
 public:
     std::string rawContent;
@@ -65,6 +75,7 @@ public:
     std::vector<ParsedSphere> spheres;
     std::vector<ParsedPlane> planes;
     std::vector<ParsedCylinder> cylinders;
+    std::vector<ParsedCone> cones;
 };
 
 class SceneParseError {
