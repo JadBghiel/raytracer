@@ -9,6 +9,8 @@
 #include "../include/SceneBuilder.hpp"
 #include "../include/PrimitiveFactory.hpp"
 #include "../include/LightFactory.hpp"
+#include <iostream>
+
 
 namespace RayTracer {
 
@@ -36,6 +38,12 @@ Scene SceneLoader::load(const ParsedScene &parsed)
     // directional lights
     for (const auto &dl : parsed.directionalLights)
         builder.addLight(LightFactory::makeDirectionalLight(dl.direction, dl.intensity));
+
+    // point lights
+    for (const auto &pl : parsed.pointLights) {
+        builder.addLight(LightFactory::makePointLight(pl.position, pl.intensity));
+        std::cerr << "[SceneLoader] adding point lights: " << parsed.pointLights.size() << "\n";
+    }
 
     // spheres: apply translation to center at load time
     for (const auto &ps : parsed.spheres) {

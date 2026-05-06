@@ -21,6 +21,10 @@ public:
     static std::shared_ptr<ILight> makeDirectionalLight(
         const Math::Vector3 &direction,
         double intensity);
+
+    static std::shared_ptr<ILight> makePointLight(
+        const Math::Point3 &pos,
+        double intensity);
 };
 
 }

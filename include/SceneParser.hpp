@@ -66,6 +66,12 @@ public:
     Math::Vector3 rotation;
 };
 
+class ParsedPointLight {
+public:
+    Math::Point3 position;
+    double intensity = 1.0;
+};
+
 class ParsedScene {
 public:
     std::string rawContent;
@@ -73,6 +79,7 @@ public:
     Camera camera;
     double ambientLight = 0.0;
     std::vector<ParsedDirectionalLight> directionalLights;
+    std::vector<ParsedPointLight> pointLights;
     std::vector<ParsedSphere> spheres;
     std::vector<ParsedPlane> planes;
     std::vector<ParsedCylinder> cylinders;

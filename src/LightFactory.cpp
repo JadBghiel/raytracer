@@ -8,7 +8,7 @@
 #include "../include/LightFactory.hpp"
 #include "../include/AmbientLight.hpp"
 #include "../include/DirectionalLight.hpp"
-
+#include "../include/PointLight.hpp"
 namespace RayTracer {
 
 std::shared_ptr<ILight> LightFactory::makeAmbientLight(double intensity)
@@ -21,6 +21,14 @@ std::shared_ptr<ILight> LightFactory::makeDirectionalLight(
     double intensity)
 {
     return std::make_shared<DirectionalLight>(direction, intensity);
+}
+
+
+std::shared_ptr<ILight> LightFactory::makePointLight(
+    const Math::Point3 &pos,
+    double intensity)
+{
+    return std::make_shared<PointLight>(pos, intensity);
 }
 
 }
