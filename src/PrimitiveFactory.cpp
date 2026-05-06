@@ -5,14 +5,14 @@
 ** PrimitiveFactory
 */
 
-#include "PrimitiveFactory.hpp"
-#include "Color.hpp"
-#include "IPrimitive.hpp"
-#include "Math.hpp"
-#include "Sphere.hpp"
-#include "Plane.hpp"
-#include "Cylinder.hpp"
-#include "Cone.hpp"
+#include "../include/PrimitiveFactory.hpp"
+#include "../include/Color.hpp"
+#include "../include/IPrimitive.hpp"
+#include "../include/Math.hpp"
+#include "../include/Sphere.hpp"
+#include "../include/Plane.hpp"
+#include "../include/Cylinder.hpp"
+#include "../include/Cone.hpp"
 #include <memory>
 
 namespace RayTracer {

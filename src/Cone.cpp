@@ -5,9 +5,9 @@
 ** Cone
 */
 
-#include "Cone.hpp"
-#include "HitRecord.hpp"
-#include "Math.hpp"
+#include "../include/Cone.hpp"
+#include "../include/HitRecord.hpp"
+#include "../include/Math.hpp"
 #include <cmath>
 #include <cstdlib>
 #include <limits>

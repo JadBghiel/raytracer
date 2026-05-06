@@ -5,7 +5,7 @@
 ** JsonHelper
 */
 
-#include "parser/JsonHelper.hpp"
+#include "../../include/parser/JsonHelper.hpp"
 #include <cctype>
 
 namespace RayTracer {

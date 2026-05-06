@@ -8,9 +8,9 @@
 #include <iostream>
 #include <string>
 
-#include "SceneParser.hpp"
-#include "SceneLoader.hpp"
-#include "Renderer.hpp"
+#include "../include/SceneParser.hpp"
+#include "../include/SceneLoader.hpp"
+#include "../include/Renderer.hpp"
 
 namespace {
 

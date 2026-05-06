@@ -5,9 +5,9 @@
 ** Plane
 */
 
-#include "Plane.hpp"
-#include "HitRecord.hpp"
-#include "Math.hpp"
+#include "../include/Plane.hpp"
+#include "../include/HitRecord.hpp"
+#include "../include/Math.hpp"
 #include <cstdlib>
 
 namespace RayTracer {

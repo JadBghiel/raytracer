@@ -8,7 +8,7 @@
 
 #include <string>
 #include <vector>
-#include "SceneParser.hpp"
+#include "../../SceneParser.hpp"
 
 namespace RayTracer {
 namespace Parser {

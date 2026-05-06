@@ -7,8 +7,8 @@
 #pragma once
 
 #include <string>
-#include "Math.hpp"
-#include "SceneParser.hpp"
+#include "../../Math.hpp"
+#include "../../SceneParser.hpp"
 
 namespace RayTracer {
 namespace Parser {

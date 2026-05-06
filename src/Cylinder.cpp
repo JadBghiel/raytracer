@@ -6,9 +6,9 @@
 */
 
 
-#include "Cylinder.hpp"
-#include "HitRecord.hpp"
-#include "Math.hpp"
+#include "../include/Cylinder.hpp"
+#include "../include/HitRecord.hpp"
+#include "../include/Math.hpp"
 #include <cmath>
 #include <cstdlib>
 #include <limits>

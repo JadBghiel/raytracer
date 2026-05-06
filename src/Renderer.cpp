@@ -5,7 +5,7 @@
 ** Renderer
 */
 
-#include "Renderer.hpp"
+#include "../include/Renderer.hpp"
 #include <algorithm>
 #include <cmath>
 #include <fstream>
