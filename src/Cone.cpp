@@ -88,7 +88,7 @@ HitRecord Cone::intersect_body(const Ray &ray, double tMin, double tMax) const
     Math::Vector3 normal =
         {
             hit_point.x - _center.x,
-            -slope * std::sqrt((hit_point.x - _center.x) * (hit_point.x - _center.x) + (hit_point.z - _center.z) * (hit_point.z - _center.z)),
+            slope * std::sqrt((hit_point.x - _center.x) * (hit_point.x - _center.x) + (hit_point.z - _center.z) * (hit_point.z - _center.z)),
             hit_point.z - _center.z
         };
     normal = normal.normalized();
