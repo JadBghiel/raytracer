@@ -48,6 +48,7 @@ add_executable(raytracer
     src/parser/primitives/SphereParser.cpp
     src/parser/primitives/PlaneParser.cpp
     src/parser/primitives/CylinderParser.cpp
+    src/parser/primitives/ConeParser.cpp
     src/parser/JsonHelper.cpp
 )
 
