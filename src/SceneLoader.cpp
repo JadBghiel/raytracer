@@ -5,10 +5,10 @@
 ** SceneLoader
 */
 
-#include "SceneLoader.hpp"
-#include "SceneBuilder.hpp"
-#include "PrimitiveFactory.hpp"
-#include "LightFactory.hpp"
+#include "../include/SceneLoader.hpp"
+#include "../include/SceneBuilder.hpp"
+#include "../include/PrimitiveFactory.hpp"
+#include "../include/LightFactory.hpp"
 
 namespace RayTracer {
 
@@ -68,6 +68,16 @@ Scene SceneLoader::load(const ParsedScene &parsed)
             pc.center.z + pc.translation.z);
         builder.addPrimitive(
             PrimitiveFactory::makeCylinder(center, pc.radius, pc.height, normalizeColor(pc.color)));
+    }
+
+    // cones: apply translation to center at load time
+    for (const auto &pco : parsed.cones) {
+        const Math::Point3 center(
+            pco.center.x + pco.translation.x,
+            pco.center.y + pco.translation.y,
+            pco.center.z + pco.translation.z);
+        builder.addPrimitive(
+            PrimitiveFactory::makeCone(center, pco.radius, pco.height, normalizeColor(pco.color)));
     }
 
     return builder.build();

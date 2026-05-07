@@ -5,9 +5,9 @@
 ** CylinderParser
 */
 
-#include "parser/primitives/CylinderParser.hpp"
-#include "parser/primitives/ParseHelpers.hpp"
-#include "parser/JsonHelper.hpp"
+#include "../../../include/parser/primitives/CylinderParser.hpp"
+#include "../../../include/parser/primitives/ParseHelpers.hpp"
+#include "../../../include/parser/JsonHelper.hpp"
 
 namespace RayTracer {
 namespace Parser {

@@ -5,11 +5,12 @@
 ** PrimitivesParser
 */
 
-#include "parser/PrimitivesParser.hpp"
-#include "parser/JsonHelper.hpp"
-#include "parser/primitives/SphereParser.hpp"
-#include "parser/primitives/PlaneParser.hpp"
-#include "parser/primitives/CylinderParser.hpp"
+#include "../../include/parser/PrimitivesParser.hpp"
+#include "../../include/parser/JsonHelper.hpp"
+#include "../../include/parser/primitives/SphereParser.hpp"
+#include "../../include/parser/primitives/PlaneParser.hpp"
+#include "../../include/parser/primitives/CylinderParser.hpp"
+#include "../../include/parser/primitives/ConeParser.hpp"
 #include <functional>
 
 namespace RayTracer {
@@ -100,6 +101,17 @@ bool PrimitivesParser::tryParsePrimitives(const std::string &content, ParsedScen
             if (!Primitives::parseCylinder(obj, cylinder, err))
                 return false;
             scene.cylinders.push_back(cylinder);
+            return true;
+        }, error))
+        return false;
+
+    // parse cones
+    if (!parsePrimitiveArray(primitivesObj, "cones",
+        [&scene](const std::string &obj, SceneParseError &err) {
+            ParsedCone cone;
+            if (!Primitives::parseCone(obj, cone, err))
+                return false;
+            scene.cones.push_back(cone);
             return true;
         }, error))
         return false;

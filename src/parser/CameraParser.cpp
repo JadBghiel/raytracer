@@ -5,8 +5,8 @@
 ** CameraParser
 */
 
-#include "parser/CameraParser.hpp"
-#include "parser/JsonHelper.hpp"
+#include "../../include/parser/CameraParser.hpp"
+#include "../../include/parser/JsonHelper.hpp"
 
 namespace RayTracer {
 namespace Parser {

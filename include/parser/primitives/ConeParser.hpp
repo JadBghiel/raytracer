@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2026
-** DirectionalLightParser
+** ConeParser
 ** File description:
-** DirectionalLightParser
+** ConeParser
 */
 #pragma once
 
@@ -11,9 +11,10 @@
 
 namespace RayTracer {
 namespace Parser {
-namespace Lights {
+namespace Primitives {
 
-bool parseDirectionVector(const std::string &lightObj, Math::Vector3 &direction, SceneParseError &error);
+bool parseCone(const std::string &coneObj, ParsedCone &cone,
+               SceneParseError &error);
 
         }
     }

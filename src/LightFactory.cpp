@@ -5,9 +5,9 @@
 ** LightFactory
 */
 
-#include "LightFactory.hpp"
-#include "AmbientLight.hpp"
-#include "DirectionalLight.hpp"
+#include "../include/LightFactory.hpp"
+#include "../include/AmbientLight.hpp"
+#include "../include/DirectionalLight.hpp"
 
 namespace RayTracer {
 

@@ -5,10 +5,10 @@
 ** SceneParser
 */
 
-#include "SceneParser.hpp"
-#include "parser/CameraParser.hpp"
-#include "parser/LightsParser.hpp"
-#include "parser/PrimitivesParser.hpp"
+#include "../../include/SceneParser.hpp"
+#include "../../include/parser/CameraParser.hpp"
+#include "../../include/parser/LightsParser.hpp"
+#include "../../include/parser/PrimitivesParser.hpp"
 
 #include <algorithm>
 #include <cctype>
