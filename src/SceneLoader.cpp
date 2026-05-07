@@ -42,7 +42,6 @@ Scene SceneLoader::load(const ParsedScene &parsed)
     // point lights
     for (const auto &pl : parsed.pointLights) {
         builder.addLight(LightFactory::makePointLight(pl.position, pl.intensity));
-        std::cerr << "[SceneLoader] adding point lights: " << parsed.pointLights.size() << "\n";
     }
 
     // spheres: apply translation to center at load time

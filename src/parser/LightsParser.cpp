@@ -156,7 +156,7 @@ bool LightsParser::tryParseLights(const std::string &content,
         }
     }
 
-    // point lights (NEW)
+    // point lights
     std::size_t pointPos = lightsObj.find("\"point\"");
     if (pointPos != std::string::npos) {
         std::size_t pointColon = lightsObj.find(':', pointPos);
@@ -216,10 +216,6 @@ bool LightsParser::tryParseLights(const std::string &content,
             }
 
             parsed.pointLights.push_back(pl);
-            // after parsed.pointLights.push_back(pl);
-            std::cerr << "[LightsParser] parsed point light at "
-                      << pl.position.x << "," << pl.position.y << "," << pl.position.z
-                      << " intensity=" << pl.intensity << "\n";
         }
     }
 
