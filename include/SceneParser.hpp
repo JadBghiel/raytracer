@@ -14,12 +14,6 @@
 
 namespace RayTracer {
 
-class ParsedDirectionalLight {
-public:
-    Math::Vector3 direction;
-    double intensity = 1.0;
-};
-
 class ParsedColor {
 public:
     double r = 0.0;
@@ -66,20 +60,31 @@ public:
     Math::Vector3 rotation;
 };
 
+class ParsedDirectionalLight {
+public:
+    Math::Vector3 direction;
+    double intensity = 1.0;
+    Math::Vector3 color = Math::Vector3(1.0, 1.0, 1.0); // default white
+};
 class ParsedPointLight {
 public:
     Math::Point3 position;
     double intensity = 1.0;
+    Math::Vector3 color = Math::Vector3(1.0, 1.0, 1.0); // default white
 };
 
 class ParsedScene {
 public:
     std::string rawContent;
     std::vector<std::string> topLevelKeys;
+
     Camera camera;
+
     double ambientLight = 0.0;
+    Math::Vector3 ambientColor = Math::Vector3(1.0, 1.0, 1.0); // default white
     std::vector<ParsedDirectionalLight> directionalLights;
     std::vector<ParsedPointLight> pointLights;
+
     std::vector<ParsedSphere> spheres;
     std::vector<ParsedPlane> planes;
     std::vector<ParsedCylinder> cylinders;
