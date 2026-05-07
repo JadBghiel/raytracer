@@ -8,10 +8,9 @@
 #include "../../include/parser/LightsParser.hpp"
 #include "../../include/parser/JsonHelper.hpp"
 #include "../../include/SceneParser.hpp"
+#include "../../include/parser/primitives/ParseHelpers.hpp"
 #include <string>
 #include <iostream>
-
-
 namespace RayTracer {
 namespace Parser {
 
@@ -40,7 +39,7 @@ bool LightsParser::tryParseLights(const std::string &content,
         return false;
     }
 
-    // ambient
+    // ambient (required scalar) and optional ambientColor
     std::size_t ambPos = lightsObj.find("\"ambient\"");
     if (ambPos == std::string::npos) {
         error.message = "ambient light is required";
@@ -64,7 +63,28 @@ bool LightsParser::tryParseLights(const std::string &content,
         return false;
     }
 
-    // diffuse default for directional lights
+    // optional ambientColor object
+    std::size_t ambColorPos = lightsObj.find("\"ambientColor\"");
+    if (ambColorPos != std::string::npos) {
+        std::size_t ambColorColon = lightsObj.find(':', ambColorPos);
+        if (ambColorColon == std::string::npos) {
+            error.message = "malformed ambientColor field";
+            error.key = "lights.ambientColor";
+            return false;
+        }
+        ++ambColorColon;
+
+        ParsedColor tmpColor;
+        if (!RayTracer::Parser::Primitives::parseColor(lightsObj, tmpColor, "lights.ambientColor", error))
+            return false;
+
+        // convert ParsedColor (likely 0..255) to Math::Vector3 normalized 0..1
+        parsed.ambientColor.x = tmpColor.r / 255.0;
+        parsed.ambientColor.y = tmpColor.g / 255.0;
+        parsed.ambientColor.z = tmpColor.b / 255.0;
+    }
+
+    // diffuse default for directional lights (optional)
     double defaultDiffuse = 1.0;
     std::size_t diffPos = lightsObj.find("\"diffuse\"");
     if (diffPos != std::string::npos) {
@@ -86,7 +106,7 @@ bool LightsParser::tryParseLights(const std::string &content,
         }
     }
 
-    // directional lights
+    // directional lights (optional)
     std::size_t dirPos = lightsObj.find("\"directional\"");
     if (dirPos != std::string::npos) {
         std::size_t dirColon = lightsObj.find(':', dirPos);
@@ -136,7 +156,7 @@ bool LightsParser::tryParseLights(const std::string &content,
             }
             dl.direction.normalize();
 
-            // intensity
+            // intensity (optional)
             dl.intensity = defaultDiffuse;
             std::size_t iPos = lightObj.find("\"intensity\"");
             if (iPos != std::string::npos) {
@@ -152,11 +172,27 @@ bool LightsParser::tryParseLights(const std::string &content,
                 }
             }
 
+            // optional color for directional light
+            std::size_t colorPos = lightObj.find("\"color\"");
+            if (colorPos != std::string::npos) {
+                ParsedColor tmpColor;
+                if (!RayTracer::Parser::Primitives::parseColor(lightObj, tmpColor, "lights.directional.color", error)) {
+                    error.key = "lights.directional.color";
+                    return false;
+                }
+                dl.color.x = tmpColor.r / 255.0;
+                dl.color.y = tmpColor.g / 255.0;
+                dl.color.z = tmpColor.b / 255.0;
+            } else {
+                dl.color = Math::Vector3(1.0, 1.0, 1.0);
+            }
+
+
             parsed.directionalLights.push_back(dl);
         }
     }
 
-    // point lights
+    // point lights (optional)
     std::size_t pointPos = lightsObj.find("\"point\"");
     if (pointPos != std::string::npos) {
         std::size_t pointColon = lightsObj.find(':', pointPos);
@@ -199,7 +235,7 @@ bool LightsParser::tryParseLights(const std::string &content,
             if (!JsonHelper::tryExtractJsonNumber(lightObj, yColon, pl.position.y, error)) return false;
             if (!JsonHelper::tryExtractJsonNumber(lightObj, zColon, pl.position.z, error)) return false;
 
-            // intensity
+            // intensity (optional)
             pl.intensity = 1.0;
             std::size_t iPos = lightObj.find("\"intensity\"");
             if (iPos != std::string::npos) {
@@ -213,6 +249,21 @@ bool LightsParser::tryParseLights(const std::string &content,
                     error.key = "lights.point.intensity";
                     return false;
                 }
+            }
+
+            // optional color for point light
+            std::size_t colorPos = lightObj.find("\"color\"");
+            if (colorPos != std::string::npos) {
+                ParsedColor tmpColor;
+                if (!RayTracer::Parser::Primitives::parseColor(lightObj, tmpColor, "lights.point.color", error)) {
+                    error.key = "lights.point.color";
+                    return false;
+                }
+                pl.color.x = tmpColor.r / 255.0;
+                pl.color.y = tmpColor.g / 255.0;
+                pl.color.z = tmpColor.b / 255.0;
+            } else {
+                pl.color = Math::Vector3(1.0, 1.0, 1.0);
             }
 
             parsed.pointLights.push_back(pl);

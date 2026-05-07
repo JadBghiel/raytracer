@@ -33,16 +33,15 @@ Scene SceneLoader::load(const ParsedScene &parsed)
 
     // ambient light, one global ambient term
     if (parsed.ambientLight > 0.0)
-        builder.addLight(LightFactory::makeAmbientLight(parsed.ambientLight));
+        builder.addLight(LightFactory::makeAmbientLight(parsed.ambientColor, parsed.ambientLight));
 
     // directional lights
-    for (const auto &dl : parsed.directionalLights)
-        builder.addLight(LightFactory::makeDirectionalLight(dl.direction, dl.intensity));
+     for (const auto &dl : parsed.directionalLights)
+        builder.addLight(LightFactory::makeDirectionalLight(dl.direction, dl.color, dl.intensity));
 
     // point lights
-    for (const auto &pl : parsed.pointLights) {
-        builder.addLight(LightFactory::makePointLight(pl.position, pl.intensity));
-    }
+    for (const auto &pl : parsed.pointLights)
+        builder.addLight(LightFactory::makePointLight(pl.position, pl.color, pl.intensity));
 
     // spheres: apply translation to center at load time
     for (const auto &ps : parsed.spheres) {
