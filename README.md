@@ -12,7 +12,6 @@ then the png will be rendered in screenshots/
 # TODO
 - SHOULD:
 
-  - cone (implemented but awaiting testing)
   - rotation (parsed but not implemented yet)
   - drop shadows
 - extra important stuff tho but at the end
@@ -34,4 +33,5 @@ then the png will be rendered in screenshots/
   - transformation ✅
 
 - SHOULD:
-  - cylinder ✅
+  - cylinder intersection ✅
+  - cone intersection ✅
