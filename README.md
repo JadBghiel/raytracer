@@ -12,7 +12,7 @@ then the png will be rendered in screenshots/
 # TODO
 - SHOULD:
 
-  - cone
+  - cone (implemented but not parsed yet)
   - rotation (parsed but not implemented yet)
   - drop shadows
 - extra important stuff tho but at the end
