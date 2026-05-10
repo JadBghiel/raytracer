@@ -57,7 +57,7 @@ Scene SceneLoader::load(const ParsedScene &parsed)
         else
             position += pp.translation.z;
         builder.addPrimitive(
-            PrimitiveFactory::makePlane(pp.axis, position, normalizeColor(pp.color)));
+            PrimitiveFactory::makePlane(pp.axis, position, normalizeColor(pp.color), pp.checkerboard));
     }
 
     // cylinders: apply translation to center at load time
