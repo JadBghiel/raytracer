@@ -8,6 +8,8 @@
 #include "../include/Plane.hpp"
 #include "../include/HitRecord.hpp"
 #include "../include/Math.hpp"
+#include "Color.hpp"
+#include <cmath>
 #include <cstdlib>
 
 namespace RayTracer {
@@ -67,6 +69,25 @@ HitRecord Plane::intersect(const Ray &ray, double tMin, double tMax) const
     if (t < tMin || t > tMax)
         return HitRecord();
     Math::Point3 hit_point = ray.at(t);
+    if (_checkerboard) {
+        int col = 0;
+        int row = 0;
+
+        if (_axis == "X") {
+            col = static_cast<int>(std::floor(hit_point.y / 2));
+            row = static_cast<int>(std::floor(hit_point.z / 2));
+        } else if (_axis == "Y") {
+            col = static_cast<int>(std::floor(hit_point.x / 2));
+            row = static_cast<int>(std::floor(hit_point.z / 2));
+        } else {
+            col = static_cast<int>(std::floor(hit_point.x / 2));
+            row = static_cast<int>(std::floor(hit_point.y / 2));
+        }
+        if ((col + row) % 2 != 0) {
+            Color dark(_color.r * 0.15, _color.g * 0.15, _color.b * 0.15);
+            return HitRecord(hit_point, normal, t, true, dark);
+        }
+    }
     return HitRecord(hit_point, normal, t, true, _color);
 }
 }
