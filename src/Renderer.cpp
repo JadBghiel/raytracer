@@ -68,7 +68,7 @@ Color Renderer::shade(const HitRecord &hit, const Scene &scene)
 {
     Math::Vector3 totalLight(0.0, 0.0, 0.0);
     for (const auto &light : scene.lights)
-        totalLight += light->contribute(hit.point, hit.normal);
+        totalLight += light->contribute(hit.point, hit.normal, scene.primitives);
 
     const double lr = std::min(1.0, std::max(0.0, totalLight.x));
     const double lg = std::min(1.0, std::max(0.0, totalLight.y));
