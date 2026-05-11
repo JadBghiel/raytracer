@@ -8,7 +8,7 @@
 #include "../include/Plane.hpp"
 #include "../include/HitRecord.hpp"
 #include "../include/Math.hpp"
-#include <cstdlib>
+#include <cmath>
 
 namespace RayTracer {
 // A plane is a flat and infinite surface defined by:
@@ -67,6 +67,24 @@ HitRecord Plane::intersect(const Ray &ray, double tMin, double tMax) const
     if (t < tMin || t > tMax)
         return HitRecord();
     Math::Point3 hit_point = ray.at(t);
-    return HitRecord(hit_point, normal, t, true, _color);
+
+    // checkerboard: pick two axes perpendicular to the plane normal
+    int ia, ib;
+    if (_axis == "Y") {
+        ia = static_cast<int>(std::floor(hit_point.x));
+        ib = static_cast<int>(std::floor(hit_point.z));
+    } else if (_axis == "X") {
+        ia = static_cast<int>(std::floor(hit_point.y));
+        ib = static_cast<int>(std::floor(hit_point.z));
+    } else {
+        ia = static_cast<int>(std::floor(hit_point.x));
+        ib = static_cast<int>(std::floor(hit_point.y));
+    }
+    const bool dark = (ia + ib) % 2 != 0;
+    const Color tileColor = dark
+        ? Color(_color.r * 0.15, _color.g * 0.15, _color.b * 0.15)
+        : _color;
+
+    return HitRecord(hit_point, normal, t, true, tileColor);
 }
 }
