@@ -260,5 +260,26 @@ bool JsonHelper::tryExtractJsonObject(const std::string &content, std::size_t &i
     return false;
 }
 
+bool JsonHelper::tryExtractJsonBool(const std::string &content, std::size_t &index, bool &value, SceneParseError &error)
+{
+    index = skipWhitespace(content, index);
+    if (index >= content.size()) {
+        error.message = "unexpected end of input while parsing bool";
+        return false;
+    }
+    if (content.substr(index, 4) == "true") {
+        value = true;
+        index += 4;
+        return true;
+    }
+    if (content.substr(index, 5) == "false") {
+        value = false;
+        index += 5;
+        return true;
+    }
+    error.message = "expected 'true' or 'false' for plane";
+    return false;
+}
+
     }
 }

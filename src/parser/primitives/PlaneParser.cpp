@@ -8,6 +8,8 @@
 #include "../../../include/parser/primitives/PlaneParser.hpp"
 #include "../../../include/parser/primitives/ParseHelpers.hpp"
 #include "../../../include/parser/JsonHelper.hpp"
+#include <cstddef>
+#include <string>
 
 namespace RayTracer {
 namespace Parser {
@@ -66,6 +68,20 @@ bool parsePlane(const std::string &planeObj, ParsedPlane &plane, SceneParseError
     if (!parseOptionalVec3(planeObj, "rotation", plane.rotation, "primitives.planes", error))
         return false;
 
+    std::size_t boardPos = planeObj.find("\"checkerboard\"");
+    if (boardPos != std::string::npos) {
+        std::size_t boardColon = planeObj.find(':', boardPos);
+        if (boardColon == std::string::npos) {
+            error.message = "malformed plane checkerboard field";
+            error.key = "primitives.planes.checkerboard";
+            return false;
+        }
+        std::size_t valueStart = boardColon + 1;
+        if (!JsonHelper::tryExtractJsonBool(planeObj, valueStart, plane.checkerboard, error)) {
+            error.key = "primitives.planes.checkerboard";
+            return false;
+        }
+    }
     return true;
 }
 

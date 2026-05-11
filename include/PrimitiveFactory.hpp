@@ -26,7 +26,8 @@ public:
     static std::shared_ptr<IPrimitive> makePlane(
         const std::string &axis,
         double position,
-        const Color &color);
+        const Color &color,
+        bool checkerboard);
     
     static std::shared_ptr<IPrimitive> makeCylinder(
         const Math::Point3 &center,

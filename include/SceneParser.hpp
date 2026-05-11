@@ -43,6 +43,7 @@ public:
     ParsedColor color;
     Math::Vector3 translation;
     Math::Vector3 rotation;
+    bool checkerboard = false;
 };
 
 class ParsedCylinder {

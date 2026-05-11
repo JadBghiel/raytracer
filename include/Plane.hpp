@@ -19,8 +19,9 @@ class Plane : public IPrimitive
         std::string _axis;
         double _pos;
         Color _color;
+        bool _checkerboard;
     public:
-        Plane(const std::string &axis, double pos, const Color &color) : _axis(axis), _pos(pos), _color(color) {};
+        Plane(const std::string &axis, double pos, const Color &color, bool checkerboard) : _axis(axis), _pos(pos), _color(color), _checkerboard(checkerboard) {};
         ~Plane() = default;
         HitRecord intersect(const Ray &ray, double tMin, double tMax) const override;
 };
