@@ -8,7 +8,7 @@
 #include "../include/Plane.hpp"
 #include "../include/HitRecord.hpp"
 #include "../include/Math.hpp"
-#include "Color.hpp"
+#include "../include/Color.hpp"
 #include <cmath>
 #include <cstdlib>
 
