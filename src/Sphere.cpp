@@ -41,8 +41,6 @@ HitRecord Sphere::intersect(const Ray &ray, double tMin, double tMax) const
         return HitRecord();
 
     double sqrt_discriminant = std::sqrt(discriminant);
-    //double t1 = (-b - sqrt_discriminant) / (2 * a);
-    //double t2 = (-b + sqrt_discriminant) / (2 * a);
     double t = (-b - sqrt_discriminant) / (2 * a);
 
     if (t < tMin || t > tMax) {

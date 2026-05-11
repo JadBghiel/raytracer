@@ -28,9 +28,10 @@ std::shared_ptr<IPrimitive> PrimitiveFactory::makeSphere(
 std::shared_ptr<IPrimitive> PrimitiveFactory::makePlane(
     const std::string &axis,
     double position,
-    const Color &color)
+    const Color &color,
+    bool checkerboard)
 {
-    return std::make_shared<Plane>(axis, position, color);
+    return std::make_shared<Plane>(axis, position, color, checkerboard);
 }
 
 std::shared_ptr<IPrimitive> PrimitiveFactory::makeCylinder(
