@@ -3,7 +3,7 @@
 we can preview the image without having sfml for now 
 
 from root do this:
-`make
+`make &&
 ./raytracer scenes/whatever.cfg &&
 ./test/snapshot.sh output.ppm
 `
