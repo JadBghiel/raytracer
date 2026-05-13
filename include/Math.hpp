@@ -49,7 +49,7 @@ public:
     {
         const double value = length();
 
-        if (value == 0.0)
+        if (value <= 0.0)
             return Vector3();
         return Vector3(x / value, y / value, z / value);
     }
@@ -58,7 +58,7 @@ public:
     {
         const double value = length();
 
-        if (value == 0.0)
+        if (value <= 0.0)
             return *this;
         x /= value;
         y /= value;
