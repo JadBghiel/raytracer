@@ -7,6 +7,8 @@
 #pragma once
 
 #include <string>
+#include <vector>
+#include "Color.hpp"
 #include "Scene.hpp"
 
 namespace RayTracer {
@@ -22,6 +24,9 @@ private:
 
     // shade the nearest hit using all lights in the scene
     static Color shade(const HitRecord &hit, const Scene &scene);
+
+    // render the scene row by row
+    static void renderRows(const Scene &scene, std::vector<Color> &buffer, int width, int height, int startRow, int endRow);
 };
 
 }
