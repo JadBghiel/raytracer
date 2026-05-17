@@ -18,6 +18,9 @@ public:
     // render scene to a ppm file at path
     static void render(const Scene &scene, const std::string &outputPath);
 
+    // return pixel buffer
+    static std::vector<Color> renderToBuffer(const Scene &scene);
+
 private:
     // build the ray for pixel (px, py
     static Ray cameraRay(const Camera &camera, int px, int py);
