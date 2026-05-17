@@ -5,7 +5,7 @@ we can preview the image without having sfml for now
 from root do this:
 `make &&
 ./raytracer scenes/whatever.cfg &&
-./test/snapshot.sh output.ppm
+./render.sh output.ppm
 `
 then the png will be rendered in screenshots/
 
