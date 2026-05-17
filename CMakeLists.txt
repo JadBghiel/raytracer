@@ -18,7 +18,10 @@ find_path(LIBCONFIGPP_INCLUDE_DIR NAMES libconfig.h++
     PATHS /usr/include /usr/local/include
 )
 
-find_package(SFML 2.5 QUIET COMPONENTS graphics window system)
+# --- SFML ---
+if (RAYTRACER_ENABLE_SFML)
+    find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
+endif()
 
 if (RAYTRACER_ENABLE_LIBCONFIGPP AND (NOT LIBCONFIGPP_LIBRARY OR NOT LIBCONFIGPP_INCLUDE_DIR))
     message(WARNING "libconfig++ not found yet: scene parser support is prepared but not enabled")
@@ -54,6 +57,15 @@ add_executable(raytracer
 
 target_include_directories(raytracer PRIVATE include)
 target_compile_options(raytracer PRIVATE -Wall -Wextra -Werror)
+
+# --- LINK SFML ONLY IF ENABLED ---
+if (RAYTRACER_ENABLE_SFML AND SFML_FOUND)
+    target_link_libraries(raytracer PRIVATE
+        sfml-graphics
+        sfml-window
+        sfml-system
+    )
+endif()
 
 add_custom_target(fclean
     COMMAND ${CMAKE_COMMAND} -E rm -f ${CMAKE_SOURCE_DIR}/raytracer
