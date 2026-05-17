@@ -35,21 +35,17 @@ std::shared_ptr<IPrimitive> PrimitiveFactory::makePlane(
 }
 
 std::shared_ptr<IPrimitive> PrimitiveFactory::makeCylinder(
-    const Math::Point3 &center,
-    double radius,
-    double height,
-    const Color &color)
+    const Math::Point3 &center, double radius, double height,
+    const Color &color, const Math::Vector3 &rotation)
 {
-    return std::make_shared<Cylinder>(center, radius, height, color);
+    return std::make_shared<Cylinder>(center, radius, height, color, rotation);
 }
 
 std::shared_ptr<IPrimitive> PrimitiveFactory::makeCone(
-    const Math::Point3 &center,
-    double radius,
-    double height,
-    const Color &color)
+    const Math::Point3 &center, double radius, double height,
+    const Color &color, const Math::Vector3 &rotation)
 {
-    return std::make_shared<Cone>(center, radius, height, color);
+    return std::make_shared<Cone>(center, radius, height, color, rotation);
 }
 
 }

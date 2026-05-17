@@ -114,9 +114,19 @@ HitRecord Cone::intersect_cap(const Ray &ray, double tMin, double tMax, double c
 
 HitRecord Cone::intersect(const Ray &ray, double tMin, double tMax) const
 {
+    // transform ray into object local space by applying the inverse rotation
+    Math::Vector3 localO(ray.origin.x - _center.x, ray.origin.y - _center.y, ray.origin.z - _center.z);
+    Math::Vector3 localD = ray.direction;
+    localO.rotateZ(-_rotation.z).rotateY(-_rotation.y).rotateX(-_rotation.x);
+    localD.rotateZ(-_rotation.z).rotateY(-_rotation.y).rotateX(-_rotation.x);
+    const Ray localRay(
+        Math::Point3(_center.x + localO.x, _center.y + localO.y, _center.z + localO.z),
+        localD
+    );
+
     double min_t = std::numeric_limits<double>::infinity();
-    HitRecord body_hit = intersect_body(ray, tMin, tMax);
-    HitRecord base_hit = intersect_cap(ray, tMin, tMax, _center.y);
+    HitRecord body_hit = intersect_body(localRay, tMin, tMax);
+    HitRecord base_hit = intersect_cap(localRay, tMin, tMax, _center.y);
     HitRecord nearest;
 
     if (body_hit.hit && body_hit.t < min_t) {
@@ -127,6 +137,11 @@ HitRecord Cone::intersect(const Ray &ray, double tMin, double tMax) const
         nearest = base_hit;
         min_t = base_hit.t;
     }
+    if (!nearest.hit)
+        return nearest;
+    // rotate normal back to world space and correct hit point from original ray
+    nearest.normal.rotateX(_rotation.x).rotateY(_rotation.y).rotateZ(_rotation.z);
+    nearest.point = ray.at(nearest.t);
     return nearest;
 }
 }

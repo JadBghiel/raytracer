@@ -66,24 +66,24 @@ Scene SceneLoader::load(const ParsedScene &parsed)
             PrimitiveFactory::makePlane(pp.axis, position, normalizeColor(pp.color), pp.checkerboard));
     }
 
-    // cylinders: apply translation to center at load time
+    // cylinders: apply translation to center at load time, pass rotation
     for (const auto &pc : parsed.cylinders) {
         const Math::Point3 center(
             pc.center.x + pc.translation.x,
             pc.center.y + pc.translation.y,
             pc.center.z + pc.translation.z);
         builder.addPrimitive(
-            PrimitiveFactory::makeCylinder(center, pc.radius, pc.height, normalizeColor(pc.color)));
+            PrimitiveFactory::makeCylinder(center, pc.radius, pc.height, normalizeColor(pc.color), pc.rotation));
     }
 
-    // cones: apply translation to center at load time
+    // cones: apply translation to center at load time, pass rotation
     for (const auto &pco : parsed.cones) {
         const Math::Point3 center(
             pco.center.x + pco.translation.x,
             pco.center.y + pco.translation.y,
             pco.center.z + pco.translation.z);
         builder.addPrimitive(
-            PrimitiveFactory::makeCone(center, pco.radius, pco.height, normalizeColor(pco.color)));
+            PrimitiveFactory::makeCone(center, pco.radius, pco.height, normalizeColor(pco.color), pco.rotation));
     }
 
     return builder.build();
