@@ -9,16 +9,19 @@
 #include <iostream>
 #include <algorithm>
 
-#include "Scene.hpp"
-#include "Renderer.hpp"
-#include "SceneParser.hpp"
+#include "../include/Renderer.hpp"
 #include "../include/SceneParser.hpp"
 #include "../include/SceneLoader.hpp"
 
 int main(int ac, char **av)
 {
-    if (ac < 2) {
-        std::cerr << "Usage: " << av[0] << " <scene.json>\n";
+    if (ac == 2 && std::string(av[1]) == "--help") {
+        std::cout << "USAGE: ./raytracer <SCENE_FILE>\n"
+                  << "  SCENE_FILE: scene configuration\n";
+        return 0;
+    }
+    if (ac != 2) {
+        std::cerr << "error: invalid args, use --help or provide one scene file\n";
         return 84;
     }
 
@@ -58,6 +61,7 @@ int main(int ac, char **av)
     }
 
     image.saveToFile("output.png");
+    RayTracer::Renderer::render(scene, "output.ppm");
 
     // display
     sf::Texture texture;
