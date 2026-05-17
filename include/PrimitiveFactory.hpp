@@ -33,12 +33,14 @@ public:
         const Math::Point3 &center,
         double radius,
         double height,
-        const Color &color);
+        const Color &color,
+        const Math::Vector3 &rotation = Math::Vector3(0, 0, 0));
     static std::shared_ptr<IPrimitive> makeCone(
         const Math::Point3 &center,
         double radius,
         double height,
-        const Color &color);
+        const Color &color,
+        const Math::Vector3 &rotation = Math::Vector3(0, 0, 0));
 };
 
 }
