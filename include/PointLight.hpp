@@ -48,7 +48,7 @@ public:
         Ray shadowRay(origin, toLight);
 
         for (const auto &prim : primitives) {
-            HitRecord h = prim->intersect(shadowRay, 1e-6, dist - 1e-6);
+            HitRecord h = prim->intersect(shadowRay, 1e-6, std::max(1e-6, dist - 1e-6));
             if (h.hit) return Math::Vector3(0,0,0);
         }
 
