@@ -2,68 +2,84 @@
 ** EPITECH PROJECT, 2026
 ** main
 ** File description:
-** main
+** Raytracer entry point with SFML display
 */
-#include <filesystem>
-#include <iostream>
-#include <string>
 
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <algorithm>
+
+#include "Scene.hpp"
+#include "Renderer.hpp"
+#include "SceneParser.hpp"
 #include "../include/SceneParser.hpp"
 #include "../include/SceneLoader.hpp"
-#include "../include/Renderer.hpp"
 
-namespace {
-
-int print_error(const std::string &message)
+int main(int ac, char **av)
 {
-    std::cerr << message << '\n';
-    return 84;
-}
+    if (ac < 2) {
+        std::cerr << "Usage: " << av[0] << " <scene.json>\n";
+        return 84;
+    }
 
-int print_help()
-{
-    std::cout << "USAGE: ./raytracer <SCENE_FILE>\n"
-              << "  SCENE_FILE: scene configuration\n";
-    return 0;
-}
+    const std::string scenePath = av[1];
 
-bool scene_file_exists(const std::string &path)
-{
-    std::error_code errorCode;
-    const std::filesystem::path scenePath(path);
+    // parse scene
+    RayTracer::SceneParseResult parseResult = RayTracer::SceneParser::parseFile(scenePath);
+    if (!parseResult.ok) {
+        const RayTracer::SceneParseError &err = parseResult.error;
+        std::cerr << "Scene parsing failed: " << err.message
+                  << " (key: " << err.key << " line: " << err.line << " col: " << err.column << ")\n";
+        return 84;
+    }
 
-    return std::filesystem::exists(scenePath, errorCode)
-        && std::filesystem::is_regular_file(scenePath, errorCode)
-        && !errorCode;
-}
+    const RayTracer::ParsedScene &parsed = parseResult.scene;
 
-}
+    RayTracer::Scene scene = RayTracer::SceneLoader::load(parsed);
 
-int main(int argc, char **argv)
-{
-    if (argc == 2 && std::string(argv[1]) == "--help")
-        return print_help();
+    const int width  = scene.camera.resolutionWidth;
+    const int height = scene.camera.resolutionHeight;
 
-    if (argc != 2)
-        return print_error("error: invalid args, use --help or provide one scene file");
+    std::vector<RayTracer::Color> buffer = RayTracer::Renderer::renderToBuffer(scene);
 
-    const std::string sceneFile = argv[1];
-    if (!scene_file_exists(sceneFile))
-        return print_error("error: scene file not found: " + sceneFile);
+    // buffer as sfml img
+    sf::Image image;
+    image.create(width, height);
 
-    const RayTracer::SceneParseResult parseResult = RayTracer::SceneParser::parseFile(sceneFile);
-    if (!parseResult.ok)
-        return print_error("error: " + parseResult.error.toString());
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            const RayTracer::Color &c = buffer[y * width + x];
+            image.setPixel(x, y, sf::Color(
+                static_cast<sf::Uint8>(std::clamp(c.r, 0.0, 1.0) * 255.0),
+                static_cast<sf::Uint8>(std::clamp(c.g, 0.0, 1.0) * 255.0),
+                static_cast<sf::Uint8>(std::clamp(c.b, 0.0, 1.0) * 255.0)
+            ));
+        }
+    }
 
-    const RayTracer::Scene scene = RayTracer::SceneLoader::load(parseResult.scene);
+    image.saveToFile("output.png");
 
-    const std::string outputPath = "output.ppm";
-    std::cout << "rendering " << scene.camera.resolutionWidth << "x"
-              << scene.camera.resolutionHeight << " ... ";
-    std::cout.flush();
+    // display
+    sf::Texture texture;
+    if (!texture.loadFromImage(image)) {
+        std::cerr << "Failed to create texture from image\n";
+        return 84;
+    }
 
-    RayTracer::Renderer::render(scene, outputPath);
+    sf::Sprite sprite(texture);
+    sf::RenderWindow window(sf::VideoMode(width, height), "Raytracer Output");
 
-    std::cout << "done -> " << outputPath << "\n";
+    while (window.isOpen()) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+
+        window.clear();
+        window.draw(sprite);
+        window.display();
+    }
+
     return 0;
 }
