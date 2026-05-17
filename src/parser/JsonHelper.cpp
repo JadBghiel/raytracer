@@ -267,12 +267,12 @@ bool JsonHelper::tryExtractJsonBool(const std::string &content, std::size_t &ind
         error.message = "unexpected end of input while parsing bool";
         return false;
     }
-    if (content.substr(index, 4) == "true") {
+    if (index + 4 <= content.size() && content.substr(index, 4) == "true") {
         value = true;
         index += 4;
         return true;
     }
-    if (content.substr(index, 5) == "false") {
+    if (index + 5 <= content.size() && content.substr(index, 5) == "false") {
         value = false;
         index += 5;
         return true;
