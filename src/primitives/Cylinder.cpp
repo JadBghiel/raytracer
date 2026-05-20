@@ -6,7 +6,7 @@
 */
 
 
-#include "../include/Cylinder.hpp"
+#include "../include/primitives/Cylinder.hpp"
 #include "../include/HitRecord.hpp"
 #include "../include/Math.hpp"
 #include <cmath>

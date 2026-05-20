@@ -5,7 +5,7 @@
 ** Sphere
 */
 
-#include "../include/Sphere.hpp"
+#include "../include/primitives/Sphere.hpp"
 #include "../include/HitRecord.hpp"
 #include "../include/Math.hpp"
 #include <cmath>

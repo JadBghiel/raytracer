@@ -5,7 +5,7 @@
 ** Plane
 */
 
-#include "../include/Plane.hpp"
+#include "../include/primitives/Plane.hpp"
 #include "../include/HitRecord.hpp"
 #include "../include/Math.hpp"
 #include "../include/Color.hpp"

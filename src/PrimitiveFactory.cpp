@@ -9,10 +9,10 @@
 #include "../include/Color.hpp"
 #include "../include/IPrimitive.hpp"
 #include "../include/Math.hpp"
-#include "../include/Sphere.hpp"
-#include "../include/Plane.hpp"
-#include "../include/Cylinder.hpp"
-#include "../include/Cone.hpp"
+#include "../include/primitives/Sphere.hpp"
+#include "../include/primitives/Plane.hpp"
+#include "../include/primitives/Cylinder.hpp"
+#include "../include/primitives/Cone.hpp"
 #include <memory>
 
 namespace RayTracer {

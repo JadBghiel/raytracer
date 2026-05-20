@@ -37,10 +37,10 @@ add_executable(raytracer
     src/SceneLoader.cpp
     src/PrimitiveFactory.cpp
     src/LightFactory.cpp
-    src/Sphere.cpp
-    src/Plane.cpp
-    src/Cylinder.cpp
-    src/Cone.cpp
+    src/primitives/Sphere.cpp
+    src/primitives/Plane.cpp
+    src/primitives/Cylinder.cpp
+    src/primitives/Cone.cpp
     src/parser/SceneParser.cpp
     src/parser/CameraParser.cpp
     src/parser/LightsParser.cpp

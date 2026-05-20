@@ -5,7 +5,7 @@
 ** Cone
 */
 
-#include "../include/Cone.hpp"
+#include "../include/primitives/Cone.hpp"
 #include "../include/HitRecord.hpp"
 #include "../include/Math.hpp"
 #include <cmath>
